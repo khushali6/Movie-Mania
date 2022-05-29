@@ -1,0 +1,1408 @@
+
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!doctype html>
+{% load static%}
+<html lang="zxx">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Movie Mania</title>
+	<!-- Template CSS -->
+	<link rel="stylesheet" href="{% static 'css/style-starter.css' %}">
+		<!-- Template CSS -->
+	<link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
+		rel="stylesheet">
+		value=request.session['']
+	<!-- Template CSS -->
+</head>
+
+<body>
+
+	<!-- header -->
+	<header id="site-header" class="w3l-header fixed-top">
+		<!--/nav-->
+		<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
+			<div class="container">
+				
+				<h1><a class="navbar-brand" href="index.html"><span class="fa fa-play icon-log"
+							aria-hidden="true"></span>
+						Movie Mania </a></h1>
+				<!-- if logo is image enable this   
+						<a class="navbar-brand" href="#index.html">
+							<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+						</a> -->
+				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<!-- <span class="navbar-toggler-icon"></span> -->
+					<span class="fa icon-expand fa-bars"></span>
+					<span class="fa icon-close fa-times"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<div class="search-right">
+							<a href="#search" class="btn search-hny mr-lg-3 mt-lg-0 mt-4" title="search">Search
+								 <span class="fa fa-search ml-3" aria-hidden="true"></span></a>
+							<!-- search popup -->
+							<div id="search" class="pop-overlay">
+								<div class="popup">
+									<form action="#" method="post" class="search-box">
+										<input type="search" placeholder="Search your Keyword" name="search"
+											required="required" autofocus="">
+										<button type="submit" class="btn"><span class="fa fa-search"
+												aria-hidden="true"></span></button>
+									</form>
+									<div class="browse-items">
+										<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
+										<ul class="search-items">
+											<li><a href="genre.html">Action</a></li>
+											<li><a href="genre.html">Drama</a></li>
+											<li><a href="genre.html">Family</a></li>
+											<li><a href="genre.html">Thriller</a></li>
+											<li><a href="genre.html">Commedy</a></li>
+											<li><a href="genre.html">Romantic</a></li>
+											<li><a href="genre.html">Tv-Series</a></li>
+											<li><a href="genre.html">Horror</a></li>
+											<li><a href="genre.html">Action</a></li>
+											<li><a href="genre.html">Drama</a></li>
+											<li><a href="genre.html">Family</a></li>
+											<li><a href="genre.html">Thriller</a></li>
+											<li><a href="genre.html">Commedy</a></li>
+											<li><a href="genre.html">Romantic</a></li>
+											<li><a href="genre.html">Tv-Series</a></li>
+											<li><a href="genre.html">Horror</a></li>
+										</ul>
+									</div>
+								</div>
+								<a class="close" href="#close">×</a>
+								
+							</div>
+							<!-- /search popup -->
+							<!--/search-right-->
+							
+						</div>
+						<li class="nav-item active">
+							<a class="nav-link" href="{% url 'index' %}">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'about' %}">About</a>
+						</li>
+				<li class="nav-item">
+								<a class="nav-link" href="genre.html">Genre</a>
+							</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'contact' %}">Contact</a>
+						</li>
+
+						<li class="nav-item">
+							<a href="{% url 'login' %}">SignIn</a>
+						</li>
+						<li class="nav-item">
+							<img src="{% static 'images/profile.png' %}" alt="Avatar" class="avatar">
+						</li>
+				
+
+						
+					</ul>
+
+					<!--/search-right-->
+					<!--/search-right-->
+					
+				</div>
+				<!-- toggle switch for light and dark theme -->
+				<div class="mobile-position">
+					<nav class="navigation">
+						<div class="theme-switch-wrapper">
+							<label class="theme-switch" for="checkbox">
+								<input type="checkbox" id="checkbox">
+								<div class="mode-container">
+									<i class="gg-sun"></i>
+									<i class="gg-moon"></i>
+								</div>
+							</label>
+						</div>
+					</nav>
+				</div>
+				<!-- //toggle switch for light and dark theme -->
+
+				
+			</div>
+			
+		</nav>
+		<!--//nav-->
+	</header>
+	<!-- //header -->
+	<!-- main-slider -->
+	<section class="w3l-main-slider position-relative" id="home">
+		<div class="companies20-content">
+			<div class="owl-one owl-carousel owl-theme owl-loaded owl-drag">
+			<div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-4895px, 0px, 0px); transition: all 1s ease 0s; width: 8392px; padding-left: 280px; padding-right: 280px;"><div class="owl-item cloned" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view banner-top2 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Movie Trailers</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog3" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog3" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/389969665" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item cloned" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view banner-top3 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Online Movies</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog4" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog4" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/323491174" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view bg bg2">
+							<div class="banner-info">
+								<h3>Latest Movie Trailers</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/358205676" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info  banner-view banner-top1 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Online Movies</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog2" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog2" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/395376850" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view banner-top2 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Movie Trailers</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog3" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog3" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/389969665" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item active" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view banner-top3 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Online Movies</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog4" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog4" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/323491174" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item cloned" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info banner-view bg bg2">
+							<div class="banner-info">
+								<h3>Latest Movie Trailers</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/358205676" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div><div class="owl-item cloned" style="width: 959px; margin-right: 20px;"><div class="item">
+					<li>
+						<div class="slider-info  banner-view banner-top1 bg bg2">
+							<div class="banner-info">
+								<h3>Latest Online Movies</h3>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
+									voluptatem tenetur consequatur.</span></p>
+								<a href="#small-dialog2" class="popup-with-zoom-anim play-view1">
+									<span class="video-play-icon">
+										<span class="fa fa-play"></span>
+									</span>
+									<h6>Watch Trailer</h6>
+								</a>
+								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+								<div id="small-dialog2" class="zoom-anim-dialog mfp-hide">
+									<iframe src="https://player.vimeo.com/video/395376850" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+								</div>
+							</div>
+						</div>
+					</li>
+				</div></div></div></div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous"> <span class="fa fa-angle-left"></span> </span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next"> <span class="fa fa-angle-right"></span> </span></button></div><div class="owl-dots"><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot active"><span></span></button></div></div>
+		</div>
+	</section>
+
+	<!-- //banner-slider-->
+
+	<!-- main-slider -->
+	
+	{% comment %} <div class="container-new">
+		<button type="button" id="moveLeft" class="btn-nav">
+		  ᐊ
+		</button>
+		<div class="container-indicators">
+		  <div class="indicator active" data-index=0></div>
+		  <div class="indicator" data-index=1></div>
+		  <div class="indicator" data-index=2></div>
+		</div>
+		<div class="slider" id="mySlider">
+		  <div class="movie" id="movie0">
+			<img
+			  src="https://images.unsplash.com/photo-1585951237318-9ea5e175b891?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+			  alt="" srcset="">
+			<div class="description">
+			  <div class="description__buttons-container">
+				<div class="description__button"><i class="fas fa-play"></i></div>
+				<div class="description__button"><i class="fas fa-plus"></i></div>
+				<div class="description__button"><i class="fas fa-thumbs-up"></i></div>
+				<div class="description__button"><i class="fas fa-thumbs-down"></i></div>
+				<div class="description__button"><i class="fas fa-chevron-down"></i></div>
+			  </div>
+			  <div class="description__text-container">
+				<span class="description__match">97% Match</span>
+				<span class="description__rating">TV-14</span>
+				<span class="description__length">2h 11m</span>
+				<br><br>
+				<span>Explosive</span>
+				<span>&middot;</span>
+				<span>Exciting</span>
+				<span>&middot;</span>
+				<span>Family</span>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<button type="button" id="moveRight" class="btn-nav">
+		  ᐅ
+		</button>
+	  </div>
+		<!--grids-sec1-->
+	<section class="w3l-grids">
+		<div class="grids-main py-5">
+		</div>
+
+	</section> {% endcomment %}
+	<!--//grids-sec1-->
+	<!--grids-sec2-->
+	<section class="w3l-grids">
+		<div class="grids-main py-5">
+			<div class="container py-lg-3">
+				<div class="headerhny-title">
+					<div class="w3l-title-grids">
+						<div class="headerhny-left">
+							<h3 class="hny-title">New Releases</h3>
+							<h4> {{id}}</h4>
+						</div>
+					
+						
+					</div>
+				</div>
+				<!--
+					slider 1
+				-->
+				<div class="headerhny-title">
+					<div class="w3l-title-grids">
+						<div class="headerhny-left">
+							<h4 class="hny-title">Action</h4>
+							
+						</div>
+						<div class="headerhny-right text-lg-right">
+							<h4><a class="show-title" href="genre.html">Show all</a></h4>
+						</div>
+						
+					</div>
+				</div>
+				<div class="owl-three owl-carousel owl-theme">
+
+					{% for show in action%}
+
+					
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="{% url 'about' %}">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n1.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						
+						<h3> <a class="title-gd"  href="{% url 'about' %}" value="{{show}}"> {{show}}</a></h3>
+						
+	
+						
+
+						
+						
+
+					</div>
+			<!--		<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n2.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+						
+					</div>
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n3.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+					
+						
+					</div>
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n4.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+					
+					
+
+					</div>
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n5.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+				
+					
+					</div>
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n6.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+						
+					
+						
+					
+
+						
+					</div>
+				-->
+				
+					{% endfor %} 
+				
+				
+				
+					
+				</div>
+
+
+				<!--
+					slider 2
+				-->
+				<div class="headerhny-title">
+					<div class="w3l-title-grids">
+						<div class="headerhny-left">
+							<h4 class="hny-title">Romantic</h4>
+						</div>
+						<div class="headerhny-right text-lg-right">
+							<h4><a class="show-title" href="genre.html">Show all</a></h4>
+						</div>
+						
+					</div>
+				<div class="owl-three owl-carousel owl-theme">
+					{% for show in romance%}
+					<div class="item vhny-grid">
+						<div class="box16 mb-0">
+							<a href="genre.html">
+								<figure>
+									<img class="img-fluid" src="{% static 'images/n1.jpg' %}" alt="">
+								</figure>
+								<div class="box-content">
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+										</span>
+
+										<span class="post fa fa-heart text-right"></span>
+									</h4>
+								</div>
+								<span class="fa fa-play video-icon" aria-hidden="true"></span>
+							</a>
+						</div>
+						<h3> <a class="title-gd" href="genre.html">{{show}}</a></h3>
+						
+					
+
+					</div>
+			
+					{% endfor %}
+				</div>
+				
+			</div>
+
+		</div>
+	</section>
+	<!--grids-sec2-->
+	<!--mid-slider -->
+	
+	<!-- //mid-slider-->
+	<!--/tabs-->
+	<section class="w3l-albums py-5" id="projects">
+		<div class="container py-lg-4">
+			<div class="row">
+				<div class="col-lg-12 mx-auto">
+					<!--Horizontal Tab-->
+					<div id="parentHorizontalTab" style="display: block; width: 100%; margin: 0px;">
+						<ul class="resp-tabs-list hor_1">
+							<li class="resp-tab-item hor_1 resp-tab-active" aria-controls="hor_1_tab_item-0" role="tab" style="background-color: white; border-color: rgb(193, 193, 193);">Trending Movies</li>
+							<li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-1" role="tab" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);">Popular Movies</li>
+							<li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-2" role="tab" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);">Trend Movies</li>
+							<li> <form method="POST" action="/movie_table" >
+								<div class="form-group">
+								  <label for="exampleInputEmail1">Enter Movie Name</label>
+								  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name">
+								</div>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+
+							<div class="clear"></div>
+						</ul>
+						<div class="resp-tabs-container hor_1" style="border-color: rgb(193, 193, 193);">
+							<h2 class="resp-accordion hor_1 resp-tab-active" role="tab" aria-controls="hor_1_tab_item-0" style="background: none white; border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>Recent Movies</h2><div class="albums-content resp-tab-content hor_1 resp-tab-content-active" aria-labelledby="hor_1_tab_item-0" style="display:block">
+								<div class="row">
+									<!--/set1-->
+									{%for row in trending%}
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html">
+
+													<img src="{% static 'images/m6.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">{{row}}</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+<!--								<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m5.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Jumanji</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m4.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Little Women</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m1.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Rocketman</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m2.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Doctor Sleep</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m3.jpg' %} " class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Knives Out</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/n1.jpg' %}" class="img-fluid" alt="author image">
+													<span class="fa fa-play video-icon" aria-hidden="true"></span>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">No Time to Die</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/n2.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Mulan</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/n3.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Free Guy</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+								-->
+									<!--//set1-->
+									{%endfor%}
+								</div>
+							</div>
+							<h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-1" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>Popular Movies</h2><div class="albums-content resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-1">
+								<div class="row">
+									<!--/set1-->
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m1.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Rocketman</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m2.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Doctor Sleep</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m3.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Knives Out</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<!--//set1-->
+									<!--/set2-->
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m7.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Frozen 2</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m8.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Toy Story 4</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m9.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Joker</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<!--//set2-->
+								</div>
+							</div>
+							<h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-2" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>Trend Movies</h2><div class="albums-content resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-2">
+								<div class="row">
+									<!--/set3-->
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m7.jpg' %} " class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Frozen 2</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m8.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Toy Story 4</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m9.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Joker</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<!--//set3-->
+									<!--/set3-->
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src=" {% static 'images/m10.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">Alita</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m11.jpg' %}" class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">The Lego</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+										<div class="slider-info">
+											<div class="img-circle">
+												<a href="genre.html"><img src="{% static 'images/m12.jpg' %} " class="img-fluid" alt="author image">
+													<div class="overlay-icon">
+
+														<span class="fa fa-play video-icon" aria-hidden="true"></span>
+													</div>
+												</a>
+											</div>
+											<div class="message">
+												<p>English</p>
+												<a class="author-book-title" href="genre.html">The Hustle</a>
+												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+
+													</span>
+
+													<span class="post fa fa-heart text-right"></span>
+												</h4>
+											</div>
+										</div>
+
+									</div>
+									<!--//set3-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //tabs-->
+	<!-- footer-66 -->
+	<footer class="w3l-footer">
+		<section class="footer-inner-main">
+			</div>
+			<div class="below-section">
+				<div class="container">
+					<div class="copyright-footer">
+						<div class="columns text-lg-left">
+							
+						</div>
+
+						<ul class="social text-lg-right">
+						
+							<li><a href="https://www.linkedin.com/in/khushalipariyal/"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+							</li>
+							<li><a href="https://twitter.com/KhushaliPariya1"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+							</li>
+							<li><a href="https://github.com/khushali6"><span class="fa fa-github" aria-hidden="true"></span></a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- copyright -->
+			<!-- move top -->
+			<button onclick="topFunction()" id="movetop" title="Go to top">
+				<span class="fa fa-arrow-up" aria-hidden="true"></span>
+			</button>
+			<script>
+				// When the user scrolls down 20px from the top of the document, show the button
+				window.onscroll = function () {
+					scrollFunction()
+				};
+
+				function scrollFunction() {
+					if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+						document.getElementById("movetop").style.display = "block";
+					} else {
+						document.getElementById("movetop").style.display = "none";
+					}
+				}
+
+				// When the user clicks on the button, scroll to the top of the document
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+			</script>
+			<!-- /move top -->
+
+		</section>
+	</footer>
+	<!--//footer-66 -->
+</body>
+
+</html>
+<!-- responsive tabs -->
+
+<script src=" {% static 'js/jquery-1.9.1.min.js' %}"></script>
+  <script src="{% static 'js/easyResponsiveTabs.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      //Horizontal Tab
+      $('#parentHorizontalTab').easyResponsiveTabs({
+        type: 'default', //Types: default, vertical, accordion
+        width: 'auto', //auto or any width like 600px
+        fit: true, // 100% fit in a container
+        tabidentify: 'hor_1', // The tab groups identifier
+        activate: function (event) { // Callback function if tab is switched
+          var $tab = $(this);
+          var $info = $('#nested-tabInfo');
+          var $name = $('span', $info);
+          $name.text($tab.text());
+          $info.show();
+        }
+      });
+    });
+  </script>  
+
+<!-- //responsive tabs -->
+<!--/theme-change-->
+<script src="{% static 'js/theme-change.js' %}"></script>
+<!-- //theme-change-->
+<script src="{% static 'js/owl.carousel.js' %}"></script>
+<!-- script for banner slider-->
+<script>
+	$(document).ready(function () {
+		$('.owl-one').owlCarousel({
+			stagePadding:280,
+			loop: true,
+			margin: 20,
+			nav: true,
+			responsiveClass: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					stagePadding:40,
+					nav: false
+				},
+				480: {
+					items: 1,
+					stagePadding:60,
+					nav: true
+				},
+				667: {
+					items: 1,
+					stagePadding:80,
+					nav: true
+				},
+				1000: {
+					items: 1,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<!-- //script -->
+<script>
+	$(document).ready(function () {
+		$('.owl-three').owlCarousel({
+			loop: true,
+			margin: 20,
+			nav: false,
+			responsiveClass: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 2,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 3,
+					nav: true
+				},
+				1000: {
+					items: 5,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<!-- //script -->
+<!-- /mid-script -->
+<script>
+	$(document).ready(function () {
+		$('.owl-mid').owlCarousel({
+			loop: true,
+			margin: 0,
+			nav: false,
+			responsiveClass: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					nav: false
+				},
+				480: {
+					items: 1,
+					nav: false
+				},
+				667: {
+					items: 1,
+					nav: true
+				},
+				1000: {
+					items: 1,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<!-- //mid-script -->
+
+<!-- script for owlcarousel -->
+<!-- Template JavaScript -->
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script>
+	$(document).ready(function () {
+		$('.popup-with-zoom-anim').magnificPopup({
+			type: 'inline',
+
+			fixedContentPos: false,
+			fixedBgPos: true,
+
+			overflowY: 'auto',
+
+			closeBtnInside: true,
+			preloader: false,
+
+			midClick: true,
+			removalDelay: 300,
+			mainClass: 'my-mfp-zoom-in'
+		});
+
+		$('.popup-with-move-anim').magnificPopup({
+			type: 'inline',
+
+			fixedContentPos: false,
+			fixedBgPos: true,
+
+			overflowY: 'auto',
+
+			closeBtnInside: true,
+			preloader: false,
+
+			midClick: true,
+			removalDelay: 300,
+			mainClass: 'my-mfp-slide-bottom'
+		});
+	});
+</script>
+<!--//-->
+<!-- disable body scroll which navbar is in active -->
+<script>
+	$(function () {
+		$('.navbar-toggler').click(function () {
+			$('body').toggleClass('noscroll');
+		})
+	});
+</script>
+<!-- disable body scroll which navbar is in active -->
+
+<!--/MENU-JS-->
+<script>
+	$(window).on("scroll", function () {
+		var scroll = $(window).scrollTop();
+
+		if (scroll >= 80) {
+			$("#site-header").addClass("nav-fixed");
+		} else {
+			$("#site-header").removeClass("nav-fixed");
+		}
+	});
+
+	//Main navigation Active Class Add Remove
+	$(".navbar-toggler").on("click", function () {
+		$("header").toggleClass("active");
+	});
+	$(document).on("ready", function () {
+		if ($(window).width() > 991) {
+			$("header").removeClass("active");
+		}
+		$(window).on("resize", function () {
+			if ($(window).width() > 991) {
+				$("header").removeClass("active");
+			}
+		});
+	});
+</script>
+
+
+<!--//MENU-JS-->
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/movie_slider.js' %}"></script>
+<script src="{% static 'js/owl.carousel.js' %}"></script>
+
+
