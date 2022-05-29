@@ -14,6 +14,11 @@ Python and Django need to be installed and other libraries<br/>
 ```bash pip install numpy```<br/>
 ```bash pip install sklearn```<br/>
 
+## Setup Virtual Environment
+```bash virtualenv App```<br/>
+```bash cd App```<br/>
+```bash source bin/activate```<br/>
+
 ## Usage<br/>
 Go to the App folder and run<br/>
 ```bash python manage.py runserver```<br/>
