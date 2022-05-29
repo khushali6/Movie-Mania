@@ -3,7 +3,7 @@ Movie Mania is a Web Application which recommends the movies user might like to 
 1. Knowledge-based<br/>
 2. Content-based<br/>
 3. Collaborative Based<br/>
-These Recommender systems is built using Pandas operations and by fitting KNN, SVD & deep learning models which use NLP techniques and NN architecture to suggest movies for the users based on similar users and for queries specific to genre, user, movie, rating, popularity.<br/>
+Recommender system is built using Pandas operations and by fitting KNN, SVD & deep learning models which use NLP techniques and NN architecture to suggest movies for the users based on similar users and for queries specific to genre, user, movie, rating, popularity.<br/>
 
 ## Installation<br/>
 Python and Django need to be installed and other libraries<br/>
