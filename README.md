@@ -8,25 +8,25 @@ Recommender system is built using Pandas operations and by fitting KNN, SVD & de
 ## Installation<br/>
 Python and Django need to be installed and other libraries<br/>
 
-```bash pip install django```<br/>
-```bash pip install pandas```<br/>
-```bash pip install seaborn```<br/>
-```bash pip install numpy```<br/>
-```bash pip install sklearn```<br/>
+``` pip install django```<br/>
+``` pip install pandas```<br/>
+``` pip install seaborn```<br/>
+``` pip install numpy```<br/>
+``` pip install sklearn```<br/>
 
 ## Setup Virtual Environment
-```bash virtualenv App```<br/>
-```bash cd App```<br/>
-```bash source bin/activate```<br/>
+``` virtualenv App```<br/>
+``` cd App```<br/>
+``` source bin/activate```<br/>
 
 ## Usage<br/>
 Go to the App folder and run<br/>
-```bash python manage.py runserver```<br/>
+``` python manage.py runserver```<br/>
 Then go to the browser and enter the url **http://127.0.0.1:8000/**<br/>
 
 ## Database Configuration<br/>
-```bash python manage.py makemigrations```<br/>
-```bash python manage.py migrate```<br/>
+``` python manage.py makemigrations```<br/>
+``` python manage.py migrate```<br/>
 
 ## Create Superuser<br/>
-```bashpython manage.py createsuperuser```
+```python manage.py createsuperuser```
