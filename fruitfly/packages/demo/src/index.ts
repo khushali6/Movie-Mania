@@ -4,3 +4,4 @@ export * from './seed';
 export * from './rig';
 export * from './MockBrowserView';
 export * from './panel-controller';
+export * from './Onboarding';

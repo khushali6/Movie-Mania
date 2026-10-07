@@ -11,3 +11,4 @@ export * from './store';
 export * from './panel/SidePanel';
 export * from './panel/types';
 export * from './panel/copy';
+export * from './components/replay';

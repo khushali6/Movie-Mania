@@ -1,6 +1,7 @@
 import type { ChatMessage, ProfileName } from '@fruitfly/core';
 import { EgressGuard } from '@fruitfly/egress';
-import { CircuitBreakers, MockGateway, ModelRouter, RateLimiter, BudgetTracker, ResponseCache, gatewayRoute, ollamaRoute, openaiProvider, ollamaProvider, type Route, type RouteProfile, type RouterEvent, type Fault } from '../src';
+import { CircuitBreakers, ModelRouter, RateLimiter, BudgetTracker, ResponseCache, gatewayRoute, ollamaRoute, openaiProvider, ollamaProvider, type Route, type RouteProfile, type RouterEvent} from '../src';
+import { MockGateway, type Fault } from '../src/mock-gateway';
 
 export const msg = (content: string, sensitivity: ChatMessage['sensitivity'] = 'public', role: ChatMessage['role'] = 'user'): ChatMessage => ({ role, content, sensitivity, segmentId: `s-${content.slice(0, 6)}`, segmentKind: 'history' });
 

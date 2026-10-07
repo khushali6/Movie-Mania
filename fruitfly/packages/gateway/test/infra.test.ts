@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { EgressGuard } from '@fruitfly/egress';
-import { BudgetTracker, CircuitBreakers, COOLDOWNS_MS, MockGateway, RateLimiter, TokenBucket, detectGateway, listGatewayModels, parseActionText, anthropicProvider, geminiProvider, toAnthropic, toGemini, anthropicRoute, geminiRoute, buildProfiles, inferCaps, createScriptedProvider, scriptedRoute, ModelRouter, openaiProvider, parseRetryAfter, classifyHttp } from '../src';
+import { MockGateway } from '../src/mock-gateway';
+import { BudgetTracker, CircuitBreakers, COOLDOWNS_MS, RateLimiter, TokenBucket, detectGateway, listGatewayModels, parseActionText, anthropicProvider, geminiProvider, toAnthropic, toGemini, anthropicRoute, geminiRoute, buildProfiles, inferCaps, createScriptedProvider, scriptedRoute, ModelRouter, openaiProvider, parseRetryAfter, classifyHttp } from '../src';
 import { msg } from './harness';
 
 describe('CircuitBreakers', () => {

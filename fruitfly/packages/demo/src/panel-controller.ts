@@ -10,15 +10,16 @@ import { seedDemoPantry } from './seed';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
-export interface DemoPanelOptions { pantry?: Pantry; seedPantry?: boolean; thinkMs?: number; latency?: number; failoverDemo?: boolean; reducedPacing?: boolean; rateLimitAtCall?: number; onBrowser?: (b: MockBrowser) => void }
+export interface DemoPanelOptions { session?: SessionStore; env?: Store<PanelEnv>; pantry?: Pantry; seedPantry?: boolean; thinkMs?: number; latency?: number; failoverDemo?: boolean; reducedPacing?: boolean; rateLimitAtCall?: number; onBrowser?: (b: MockBrowser) => void }
 
 /**
  * The same loop, router, context layer and Pantry as the real extension, driven by a scripted model against the MockBrowser.
  * Used by the landing page, onboarding, Fly Lab and e2e tests.
  */
 export class DemoPanelController implements PanelController {
-  session = new SessionStore();
-  env = new Store<PanelEnv>({ mode: 'demo', routeLabel: 'Demo mode', gateway: 'connected', nectar: 0.86, pantryOn: true, running: false, firstRun: true, localModel: true });
+  session: SessionStore;
+  env: Store<PanelEnv>;
+  private envInit: PanelEnv = { mode: 'demo', routeLabel: 'Demo mode', gateway: 'connected', nectar: 0.86, pantryOn: true, running: false, firstRun: true, localModel: true };
   pantry: PantryApi;
   rig?: DemoRig;
   browser: MockBrowser | null = null;
@@ -32,6 +33,7 @@ export class DemoPanelController implements PanelController {
 
   constructor(opts: DemoPanelOptions = {}) {
     this.options = opts;
+    this.session = opts.session ?? new SessionStore(); this.env = opts.env ?? new Store<PanelEnv>(this.envInit);
     this.pantryObj = opts.pantry ?? new Pantry({ vault: { iterations: 2000 } });
     this.pantry = this.makePantryApi();
     if (opts.seedPantry !== false) void seedDemoPantry(this.pantryObj).then(() => this.bump());

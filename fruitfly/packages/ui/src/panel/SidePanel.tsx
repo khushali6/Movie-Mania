@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { BookOpen, Command, Gauge, Layers, ListChecks, MoreHorizontal, Pause, Play, Settings, Shield, Sparkles, Wand2, Cpu, Hand } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { dur, ease, spring, variants } from '../motion';
 import { useFly, useFlyAnchor } from '../fly';
 import { ProceduralFly } from '../fly/ProceduralFly';
@@ -84,7 +84,7 @@ function Banners({ controller }: { controller: PanelController }) {
   );
 }
 
-function TaskView({ controller }: { controller: PanelController }) {
+function TaskView({ controller, extra }: { controller: PanelController; extra?: ReactNode }) {
   const s = useSession(controller.session); const env = useStore(controller.env); const fly = useFly();
   const empty = !s.goal && s.status === 'idle';
   // the result card unfolds only once the fly has carried it in
@@ -105,6 +105,7 @@ function TaskView({ controller }: { controller: PanelController }) {
         <>
           <div className="ff-goal">{s.goal}</div>
           {(s.status === 'working' || s.status === 'throttled' || s.status === 'paused' || s.status === 'needs_you') && <NowCard session={s} />}
+          {extra}
           <Timeline session={s} />
           <AnimatePresence>{s.approval && <ApprovalCard key={s.approval.id} approval={s.approval} onApprove={() => controller.approve(s.approval!.id)} onCancel={() => controller.cancelApproval(s.approval!.id)} onTakeover={controller.takeover} />}</AnimatePresence>
           {s.notes.filter((n) => n.state === 'proposed').map((n) => <Callout key={n.id} tone="info" title="I'd like to remember" action={<div className="ff-row" style={{ marginTop: 8 }}><Button size="sm" variant="primary" onClick={() => controller.pantry?.keepNote(n.id)}>Keep</Button><Button size="sm" variant="ghost" onClick={() => controller.pantry?.deleteNote(n.id)}>Not now</Button></div>}>{n.text}</Callout>)}
@@ -157,9 +158,9 @@ function PantryView({ controller }: { controller: PanelController }) {
   );
 }
 
-export interface SidePanelProps { controller: PanelController; /** fixed pixel width for embedding; default fills the container */ className?: string }
+export interface SidePanelProps { controller: PanelController; className?: string; /** shown under the "now" card while a task runs (the demo browser, in demo mode) */ taskExtra?: ReactNode }
 
-function PanelInner({ controller }: SidePanelProps) {
+function PanelInner({ controller, taskExtra }: SidePanelProps) {
   const s = useSession(controller.session); const env = useStore(controller.env);
   const [tab, setTab] = useState<'task' | 'pantry'>('task'); const [palette, setPalette] = useState(false);
   const perch = useFlyAnchor<HTMLDivElement>('perch-default', { side: 'center' });
@@ -204,7 +205,7 @@ function PanelInner({ controller }: SidePanelProps) {
       <Header controller={controller} onPalette={() => setPalette(true)} />
       <div style={{ padding: '0 14px 6px' }}><Tabs<'task' | 'pantry'> label="Panel" value={tab} onChange={setTab} tabs={[{ value: 'task', label: 'Task', icon: <Sparkles /> }, { value: 'pantry', label: 'Pantry', icon: <BookOpen /> }]} /></div>
       <div className="ff-scroll" aria-live="off" ref={scroller}>
-        <AnimatePresence mode="wait" initial={false}><motion.div key={tab} initial={{ opacity: 0, x: tab === 'pantry' ? 12 : -12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: dur.base, ease: ease.standard }}>{tab === 'task' ? <TaskView controller={controller} /> : <PantryView controller={controller} />}</motion.div></AnimatePresence>
+        <AnimatePresence mode="wait" initial={false}><motion.div key={tab} initial={{ opacity: 0, x: tab === 'pantry' ? 12 : -12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: dur.base, ease: ease.standard }}>{tab === 'task' ? <TaskView controller={controller} extra={taskExtra} /> : <PantryView controller={controller} />}</motion.div></AnimatePresence>
       </div>
       <div ref={perch} aria-hidden style={{ position: 'absolute', right: 40, bottom: 112, width: 2, height: 2 }} />
       <div className="ff-footer">

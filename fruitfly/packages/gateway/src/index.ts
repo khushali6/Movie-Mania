@@ -14,4 +14,3 @@ export * from './providers/gemini';
 export * from './providers/ollama';
 export * from './providers/scripted';
 export { send } from './providers/http';
-export * from './mock-gateway';

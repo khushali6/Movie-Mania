@@ -75,7 +75,7 @@ describe('Pantry ingest, sensitivity gating, dedupe', () => {
   it('re-embeds every document when the embedder changes, with progress, keeping search working', async () => {
     const p = new Pantry(); await loadGolden(p);
     const steps: number[] = [];
-    const e2 = new HashingEmbedder(256);
+    const e2 = new HashingEmbedder(320);
     await p.setEmbedder(e2, (d) => steps.push(d));
     expect(steps.at(-1)).toBe(5);
     expect((await p.list()).every((d) => d.embedModelId === e2.id)).toBe(true);
