@@ -6,3 +6,4 @@ export * from './mood';
 export * from './types';
 export * from './events';
 export * from './messages';
+export * from './task';
