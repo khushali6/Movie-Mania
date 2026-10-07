@@ -15,8 +15,12 @@
   "dependencies": {
     "@fruitfly/core": "workspace:*",
     "@fruitfly/egress": "workspace:*",
+    "mammoth": "^1.13.0",
     "minisearch": "^7.1.0",
+    "pdfjs-dist": "^6.4.299",
     "zod": "^3.24.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jszip": "^3.10.2"
+  }
 }

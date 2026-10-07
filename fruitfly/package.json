@@ -1,6 +1,7 @@
 {
   "name": "fruitfly",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
   "packageManager": "pnpm@10.28.0",
   "scripts": {
