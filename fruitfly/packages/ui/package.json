@@ -10,8 +10,7 @@
     "./*": "./src/*"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json",
-    "fly-lab": "vite --config lab/vite.config.ts"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

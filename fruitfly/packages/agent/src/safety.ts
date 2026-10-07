@@ -27,6 +27,8 @@ export function classifyAction(a: ActionInfo): ActionVerdict {
   switch (a.tool) {
     case 'click': {
       if (!el) return { level: 'none', reason: '' };
+      // links navigate; the risky act is the button on the page they lead to
+      if (el.role === 'link') return { level: 'none', reason: '' };
       if (TRANSFER.test(label)) return { level: 'sensitive', reason: `This looks like a money transfer: "${el.label}".`, category: 'purchase' };
       if (HARD_PURCHASE.test(label)) return { level: 'sensitive', reason: `This will place an order or take payment: "${el.label}".`, category: 'purchase' };
       if (PURCHASE.test(label)) return { level: 'confirm', reason: `This moves toward buying: "${el.label}".`, category: 'purchase' };

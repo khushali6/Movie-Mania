@@ -31,6 +31,8 @@ export interface RigOptions extends Partial<BrainOptions> {
   beforeAction?: AgentDeps['beforeAction'];
   afterAction?: AgentDeps['afterAction'];
   withPantry?: boolean;
+  /** use this Pantry instead of a fresh one (the panel owns the user's Pantry) */
+  pantry?: Pantry;
   /** two scripted routes so a scripted 429 visibly fails over */
   failoverDemo?: boolean;
   stepsCap?: number;
@@ -42,8 +44,9 @@ export interface RigOptions extends Partial<BrainOptions> {
 export async function createDemoRig(o: RigOptions = {}): Promise<DemoRig> {
   const scenario = o.scenario ?? 'laptop';
   const browser = new MockBrowser(demoSites(), 'https://start.fruitfly.local/'); browser.latency = o.latency ?? 0;
-  const pantry = new Pantry();
-  if (o.withPantry || scenario === 'pantry') await seedDemoPantry(pantry);
+  const pantry = o.pantry ?? new Pantry();
+  const usePantry = !!(o.withPantry || scenario === 'pantry' || o.pantry);
+  if (usePantry && !o.pantry) await seedDemoPantry(pantry);
   const brain = createDemoBrain({ scenario, rateLimitAtCall: o.rateLimitAtCall, thinkMs: o.thinkMs });
   const provider = createScriptedProvider(brain);
   const primary = scriptedRoute({ id: 'demo:free-pool', label: 'Free pool · auto', kind: o.failoverDemo ? 'remote' : 'local', allowsPersonal: true });
@@ -63,7 +66,7 @@ export async function createDemoRig(o: RigOptions = {}): Promise<DemoRig> {
   const client = { complete: model.complete.bind(model), modelInfo: () => ({ id: 'demo', label: 'Demo mode', maxContext: 64_000, maxOutput: 4096, supportsTools: true, supportsVision: false, supportsStreaming: false }), allowance: () => 'local-only' as const };
   const store = new MemoryTaskStore(); const observations = new MemoryObservationStore(); const events: AgentEvent[] = [];
   const context = new ContextManager(); const meter = new TokenMeter();
-  const controller = new AgentController(() => ({ model: client, browser, context, meter, observations, store, pantry: o.withPantry || scenario === 'pantry' ? pantry : undefined, settings: { stepsCap: o.stepsCap ?? 40 }, beforeAction: o.beforeAction, afterAction: o.afterAction }));
+  const controller = new AgentController(() => ({ model: client, browser, context, meter, observations, store, pantry: usePantry ? pantry : undefined, settings: { stepsCap: o.stepsCap ?? 40 }, beforeAction: o.beforeAction, afterAction: o.afterAction }));
   controller.on((e) => events.push(e));
   return { controller, browser, pantry, router, routerEvents, events, breakers, routes, guard, store, observations, scenario };
 }

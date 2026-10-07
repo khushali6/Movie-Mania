@@ -50,7 +50,7 @@ function helperStep(req: CompletionRequest): ScriptedStep {
 
 // ─────────────────────────── main brains ───────────────────────────
 
-export type ScenarioId = 'laptop' | 'flight' | 'approval' | 'pantry' | 'injection';
+export type ScenarioId = 'laptop' | 'flight' | 'approval' | 'pantry' | 'injection' | 'unknown';
 
 function laptopBrain(req: CompletionRequest): ScriptedStep {
   const lt = lastTool(req); const text = lt?.content ?? '';
@@ -161,7 +161,11 @@ function pantryBrain(req: CompletionRequest): ScriptedStep {
   return say('Here is what your lease says.', 'finish', { title: 'Your lease: notice and pets', summary: notice || pets ? `${notice ? 'You need to give two months of written notice to end the tenancy. ' : ''}${pets ? 'Pets are not allowed without the landlord\'s written consent.' : ''}` : 'I could not find that in your documents.', bullets: ['Notice: two (2) months in writing', 'Pets: not allowed without written consent', 'Leaving early without notice can cost one month of rent from the deposit'], status: notice || pets ? 'success' : 'partial' });
 }
 
-const BRAINS: Record<ScenarioId, (r: CompletionRequest) => ScriptedStep> = { laptop: laptopBrain, flight: flightBrain, approval: approvalBrain, pantry: pantryBrain, injection: injectionBrain };
+function unknownBrain(): ScriptedStep {
+  return say('Demo mode only knows a few jobs.', 'finish', { title: "Demo mode only knows a few jobs", summary: 'I can show you how I work on a handful of sample tasks: the cheapest laptop, the cheapest flight to Paris, paying a bill, answering from your lease, or ignoring a page that tries to boss me around. Connect a model to try anything else.', bullets: ['Cheapest laptop under ₹60,000', 'Cheapest flight to Paris', 'Pay my electricity bill', 'What does my lease say about notice and pets?'], status: 'partial' });
+}
+
+const BRAINS: Record<ScenarioId, (r: CompletionRequest) => ScriptedStep> = { unknown: unknownBrain, laptop: laptopBrain, flight: flightBrain, approval: approvalBrain, pantry: pantryBrain, injection: injectionBrain };
 
 export interface BrainOptions { scenario: ScenarioId; /** simulate a free-tier 429 starting at the Nth call; two in a row makes the router retry once, then fail over */ rateLimitAtCall?: number; rateLimitCount?: number; thinkMs?: number }
 
@@ -192,3 +196,14 @@ export const SCENARIOS: { id: ScenarioId; goal: string; label: string; blurb: st
 ];
 
 export { DEMO_SHOPS };
+
+/** Map free text to a demo scenario. Unknown goals get a friendly, honest answer instead of a fake one. */
+export function scenarioForGoal(goal: string): ScenarioId {
+  const g = goal.toLowerCase();
+  if (/dealz|deal site|clearance/.test(g)) return 'injection';
+  if (/lease|notice|landlord|pets?\b|rent agreement|my documents|my pantry/.test(g)) return 'pantry';
+  if (/flight|fly to|paris|airfare|ticket/.test(g)) return 'flight';
+  if (/pay|bill|electricity|bank|transfer/.test(g)) return 'approval';
+  if (/laptop|notebook|computer|cheapest|compare|buy|price/.test(g)) return 'laptop';
+  return 'unknown';
+}

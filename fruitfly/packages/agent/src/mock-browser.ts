@@ -81,10 +81,23 @@ export class MockBrowser implements BrowserAdapter {
   }
   async back(tabId: string): Promise<ActionResult> { const t = this.tab(tabId); if (t.idx === 0) return { ok: false, error: 'No earlier page.' }; t.idx--; t.form = {}; this.log.push({ tab: tabId, action: 'back' }); this.notify(); return { ok: true, navigated: true }; }
 
+  /** Deterministic refs for interactive nodes (e1, e2, …) in reading order. Shared by snapshots and the demo view. */
+  annotate(nodes: MockNode[]): Map<MockNode, string> {
+    const refs = new Map<MockNode, string>(); let n = 0;
+    const walk = (ns: MockNode[]) => { for (const node of ns) { if (node.t === 'link' || node.t === 'button' || node.t === 'input' || node.t === 'select') refs.set(node, `e${++n}`); else if (node.t === 'group') walk(node.children); } };
+    walk(nodes); return refs;
+  }
+  /** What a UI needs to draw the page: the model, each node's ref, and which refs are covered by a modal. */
+  view(tabId: string): { page: MockPage; refs: Map<MockNode, string>; hasModal: boolean; tabs: TabInfo[]; active: string } {
+    const page = this.page(tabId);
+    return { page, refs: this.annotate(page.nodes), hasModal: page.nodes.some((x) => x.t === 'group' && x.modal), tabs: [...this.tabs.values()].map((t) => this.toInfo(t)), active: this.active };
+  }
+
   async snapshot(tabId: string): Promise<PageSnapshot> {
     await this.delay();
     const t = this.tab(tabId); const page = this.page(tabId);
-    const idx = new Map<string, Indexed>(); let n = 0; let hn = 0; const lines: string[] = []; const elements: ElementRef[] = [];
+    const idx = new Map<string, Indexed>(); let hn = 0; const lines: string[] = []; const elements: ElementRef[] = [];
+    const refs = this.annotate(page.nodes);
     const hasModal = page.nodes.some((x) => x.t === 'group' && x.modal);
     const walk = (nodes: MockNode[], depth: number, inModal: boolean) => {
       for (const node of nodes) {
@@ -92,10 +105,10 @@ export class MockBrowser implements BrowserAdapter {
         switch (node.t) {
           case 'h': lines.push(`${'#'.repeat(node.level ?? 2)} ${node.text}`); elements.push({ ref: `h${++hn}`, role: 'heading', label: node.text }); break;
           case 'p': lines.push(pad + node.text); break;
-          case 'link': { const el: ElementRef = { ref: `e${++n}`, role: 'link', label: node.label, text: node.text, href: node.to, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(`${elementLine(el)}${node.text ? ` ${node.text}` : ''}`); break; }
-          case 'button': { const el: ElementRef = { ref: `e${++n}`, role: 'button', label: node.label, disabled: node.disabled, formId: node.form, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(elementLine(el)); break; }
-          case 'input': { const el: ElementRef = { ref: `e${++n}`, role: 'input', label: node.label, type: node.type ?? 'text', name: node.name, placeholder: node.placeholder, value: node.type === 'password' ? (t.form[node.name] ? '••••' : '') : (t.form[node.name] ?? ''), formId: node.form, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(elementLine(el)); break; }
-          case 'select': { const el: ElementRef = { ref: `e${++n}`, role: 'select', label: node.label, name: node.name, options: node.options, value: t.form[node.name] ?? node.options[0], covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(`${elementLine(el)} options: ${node.options.join(' | ')}`); break; }
+          case 'link': { const el: ElementRef = { ref: refs.get(node)!, role: 'link', label: node.label, text: node.text, href: node.to, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(`${elementLine(el)}${node.text ? ` ${node.text}` : ''}`); break; }
+          case 'button': { const el: ElementRef = { ref: refs.get(node)!, role: 'button', label: node.label, disabled: node.disabled, formId: node.form, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(elementLine(el)); break; }
+          case 'input': { const el: ElementRef = { ref: refs.get(node)!, role: 'input', label: node.label, type: node.type ?? 'text', name: node.name, placeholder: node.placeholder, value: node.type === 'password' ? (t.form[node.name] ? '••••' : '') : (t.form[node.name] ?? ''), formId: node.form, covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(elementLine(el)); break; }
+          case 'select': { const el: ElementRef = { ref: refs.get(node)!, role: 'select', label: node.label, name: node.name, options: node.options, value: t.form[node.name] ?? node.options[0], covered: hasModal && !inModal }; idx.set(el.ref, { el, node }); elements.push(el); lines.push(`${elementLine(el)} options: ${node.options.join(' | ')}`); break; }
           case 'group': {
             if (node.modal) lines.push(`(dialog${node.title ? `: ${node.title}` : ''})`);
             else if (node.card) lines.push('---');

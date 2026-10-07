@@ -21,7 +21,8 @@ export interface FlyApi {
   halt(): void;
   /** Carry the result card in, drop it at `result-card`, resolve when it lands. */
   deliverResult(): Promise<void>;
-  handleEvent(e: AgentEvent): void;
+  /** resolves when any fly choreography for the event (e.g. delivering the result card) has finished */
+  handleEvent(e: AgentEvent): Promise<void> | void;
   setEnergy(e: FlyEnergy): void;
 }
 
@@ -83,7 +84,8 @@ export function FlyProvider({ children, size = 60, energy = 'normal', seed = 11,
       renderer.render(engine.frame, dt);
     });
 
-    const resolvePoint = (id: string): Vec | null => { const p = anchors.point(id, size * 0.45); return p ? toLocal(p) : null; };
+    const FALLBACK: Record<string, string[]> = { 'page-preview': ['now-card', 'timeline-active-step'], 'timeline-active-step': ['now-card'], 'approval-card': ['composer'], 'result-card': ['timeline-active-step'], 'subagent-lane': ['timeline-active-step'] };
+    const resolvePoint = (id: string): Vec | null => { for (const c of [id, ...(FALLBACK[id] ?? [])]) { const p = anchors.point(c, size * 0.45); if (p) return toLocal(p); } return null; };
 
     // follow anchors when the layout shifts under us
     const offAnch = anchors.subscribe(() => {
@@ -95,6 +97,8 @@ export function FlyProvider({ children, size = 60, energy = 'normal', seed = 11,
       if (composer) { const o = origin(); engine.setUserPoint({ x: composer.left - o.x + composer.width * 0.5, y: composer.top - o.y + composer.height * 0.5 }); }
     });
 
+    // components register their anchors a React render after the event arrives: give the real one a moment before falling back
+    const waitForAnchor = (id: string, ms = 520): Promise<boolean> => new Promise((res) => { const t0 = performance.now(); const poll = () => { if (anchors.has(id)) return res(true); if (performance.now() - t0 > ms) return res(false); setTimeout(poll, 16); }; poll(); });
     const flyToAnchor: FlyApi['flyToAnchor'] = (id, o = {}) => new Promise<void>((resolve) => {
       const p = resolvePoint(id);
       if (o.mood) engine.setMood(o.mood, { force: true });
@@ -131,11 +135,11 @@ export function FlyProvider({ children, size = 60, energy = 'normal', seed = 11,
         if (corner) { homeRef.current = 'result-card'; engine.perch(corner); }
       },
       handleEvent: (e) => {
-        if (e.type === 'result') { if (e.result.status === 'failed') { engine.setMood('error', { force: true }); } else void api.deliverResult(); return; }
+        if (e.type === 'result') { if (e.result.status === 'failed') { engine.setMood('error', { force: true }); return; } return api.deliverResult(); }
         const m = moodForEvent(e);
         if (!m) return;
-        if (m.anchor && anchors.has(m.anchor)) void flyToAnchor(m.anchor, { mood: m.mood, look: m.anchor === 'approval-card' ? 'composer' : undefined, style: e.type === 'step_started' ? 'dart' : undefined });
-        else engine.setMood(m.mood, { force: m.mood === 'error' });
+        engine.setMood(m.mood, { force: m.mood === 'error' || m.mood === 'asking' });
+        if (m.anchor) void waitForAnchor(m.anchor).then(() => { if (resolvePoint(m.anchor!)) void flyToAnchor(m.anchor!, { mood: m.mood, look: m.anchor === 'approval-card' ? 'composer' : undefined, style: e.type === 'step_started' ? 'dart' : undefined }); });
       },
       setEnergy: (en) => engine.setEnergy(en),
     };

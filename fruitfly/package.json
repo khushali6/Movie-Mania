@@ -7,7 +7,7 @@
   "scripts": {
     "dev:ext": "pnpm --filter @fruitfly/extension dev",
     "dev:landing": "pnpm --filter @fruitfly/landing dev",
-    "fly-lab": "pnpm --filter @fruitfly/ui fly-lab",
+    "fly-lab": "pnpm --filter @fruitfly/lab dev",
     "build:ext": "pnpm --filter @fruitfly/extension build",
     "build:landing": "pnpm --filter @fruitfly/landing build",
     "test": "vitest run",
