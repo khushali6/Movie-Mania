@@ -62,7 +62,7 @@ export class PromptBuilder {
     const tools = sortTools(inp.tools);
     const messages: ChatMessage[] = [];
     const segments: ContextSegment[] = [];
-    const push = (m: ChatMessage, kind: ContextSegment['kind'], id: string, cacheable: boolean) => {
+    const push = (m: ChatMessage, kind: ContextSegment['kind'], id: string, _cacheable: boolean) => {
       messages.push({ ...m, segmentKind: kind, segmentId: id });
     };
 

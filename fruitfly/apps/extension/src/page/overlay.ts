@@ -34,7 +34,7 @@ const win = window as W;
   root.append(style, ring, tag, pill);
 
   let renderer: FlyRenderer | null = null; let engine: FlyEngine | null = null; let raf = 0; let last = 0;
-  let targetRef: string | null = null; let visible = false; let txt = pill.querySelector('.txt') as HTMLElement;
+  let targetRef: string | null = null; let visible = false; const txt = pill.querySelector('.txt') as HTMLElement;
   const path: [number, number, number][] = []; let lastSample = 0; let lastFlush = 0; const t0 = Date.now();
 
   const send = (m: unknown) => { try { void chrome.runtime.sendMessage(m); } catch { /* extension reloaded: nothing to do */ } };

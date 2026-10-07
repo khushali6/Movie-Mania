@@ -9,7 +9,7 @@ import { useSession } from '../session';
 import { useStore } from '../store';
 import { ApprovalCard, CommandBar, ContextInspector, NectarMeter, NowCard, ResultCard, StatusChip, Timeline, type InspectorData } from '../components/agent';
 import { GatewayStatus } from '../components/models';
-import { DropZone, NotesList, PantrySearch, PantryShelf, ProfileForm, StorageMeter, VaultPanel, type DocView, type NoteView, type PassageView, type ProfileFieldView, type VaultFieldView } from '../components/pantry';
+import { DropZone, NotesList, PantrySearch, PantryShelf, ProfileForm, StorageMeter, VaultPanel, type DocView, type NoteView, type PassageView, type VaultFieldView } from '../components/pantry';
 import { CommandPalette, type PaletteItem } from '../components/palette';
 import { Button, Callout, Dialog, EmptyState, IconButton, MenuItem, MenuSep, Popover, Segmented, Tabs, Textarea, ToastProvider, useToast } from '../components/primitives';
 import { errorCopy } from './copy';
@@ -160,7 +160,11 @@ function PantryView({ controller }: { controller: PanelController }) {
 
 export interface SidePanelProps { controller: PanelController; className?: string; /** shown under the "now" card while a task runs (the demo browser, in demo mode) */ taskExtra?: ReactNode }
 
-function PanelInner({ controller, taskExtra }: SidePanelProps) {
+/** Controllers are classes; the panel passes their methods around as callbacks, so hand it a view whose methods keep `this`. */
+function bound<T extends object>(c: T): T { return new Proxy(c, { get: (t, k) => { const v = Reflect.get(t, k, t) as unknown; return typeof v === 'function' ? (v as (...a: unknown[]) => unknown).bind(t) : v; } }); }
+
+function PanelInner({ controller: raw, taskExtra }: SidePanelProps) {
+  const controller = useMemo(() => bound(raw), [raw]);
   const s = useSession(controller.session); const env = useStore(controller.env);
   const [tab, setTab] = useState<'task' | 'pantry'>('task'); const [palette, setPalette] = useState(false);
   const perch = useFlyAnchor<HTMLDivElement>('perch-default', { side: 'center' });

@@ -21,8 +21,9 @@ chrome.runtime.onConnect.addListener((port) => { if (port.name !== 'panel') retu
 chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
   const p = InternalMsgSchema.safeParse(raw);
   if (!p.success) return false;
-  // content scripts may only send their own narrow messages
-  if (sender.tab && !['takeover_from_page', 'stop_from_page', 'fly_path'].includes(p.data.ff)) return false;
+  // content scripts (anything not served from this extension) may only send their own narrow messages
+  const fromExtension = sender.id === chrome.runtime.id && !!sender.url?.startsWith(chrome.runtime.getURL(''));
+  if (!fromExtension && !['takeover_from_page', 'stop_from_page', 'fly_path'].includes(p.data.ff)) return false;
   if (p.data.ff === 'open_panel') { const w = sender.tab?.windowId; void (w ? chrome.sidePanel.open({ windowId: w }) : chrome.windows.getCurrent().then((cw) => chrome.sidePanel.open({ windowId: cw.id! }))).then(() => sendResponse({ ok: true })).catch(() => sendResponse({ ok: false })); return true; }
   void host.internal(p.data, sender).then(sendResponse).catch((e: Error) => sendResponse({ ok: false, error: e.message }));
   return true;

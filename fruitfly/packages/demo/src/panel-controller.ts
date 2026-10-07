@@ -107,21 +107,21 @@ export class DemoPanelController implements PanelController {
 
   private bump = () => this.subs.forEach((s) => s());
   private makePantryApi(): PantryApi {
-    const p = this.pantryObj; const self = this;
+    const p = this.pantryObj; const subs = this.subs; const bump = () => this.bump();
     const view = (d: Awaited<ReturnType<Pantry['list']>>[number]): DocView => ({ id: d.id, title: d.title, mime: d.mime, bytes: d.bytes, sensitivity: d.sensitivity, status: d.status, lastUsedAt: d.lastUsedAt, chunkCount: d.chunkCount, error: d.error });
     return {
-      subscribe: (cb) => { self.subs.add(cb); return () => self.subs.delete(cb); },
+      subscribe: (cb) => { subs.add(cb); return () => subs.delete(cb); },
       docs: async () => (await p.list()).map(view),
-      addFiles: async (files) => { for (const f of files) await p.addFile(f); self.bump(); },
-      addText: async (t, x, s) => { await p.addText(t, x, { sensitivity: s }); self.bump(); },
-      remove: async (id) => { await p.remove(id); self.bump(); },
-      setSensitivity: async (id, s: Sensitivity) => { await p.setSensitivity(id, s); self.bump(); },
+      addFiles: async (files) => { for (const f of files) await p.addFile(f); bump(); },
+      addText: async (t, x, s) => { await p.addText(t, x, { sensitivity: s }); bump(); },
+      remove: async (id) => { await p.remove(id); bump(); },
+      setSensitivity: async (id, s: Sensitivity) => { await p.setSensitivity(id, s); bump(); },
       search: async (q) => (await p.search(q, { maxAllowed: 'local-only', force: true, k: 4 })).passages.map((x) => ({ id: x.id, doc: x.doc, page: x.page, text: x.text, sensitivity: x.sensitivity, headingPath: x.headingPath })),
       profile: async () => { const fields = await p.profile.get(); const d = await p.profile.digest(); const st = (await import('@fruitfly/pantry')).standingInstructions(fields); return { fields, digestTokens: d.tokens, standing: st }; },
-      setProfile: async (k, patch) => { await p.profile.update(k, patch); self.bump(); },
+      setProfile: async (k, patch) => { await p.profile.update(k, patch); bump(); },
       notes: async () => (await p.notes.list()).map((n) => ({ id: n.id, text: n.text, status: n.status })),
-      keepNote: async (id) => { await p.notes.keep(id); self.bump(); }, deleteNote: async (id) => { await p.notes.dismiss(id); self.bump(); }, editNote: async (id, t) => { await p.notes.edit(id, t); self.bump(); },
-      vault: { state: async () => (!(await p.vault.isSetUp()) ? 'unset' : p.vault.isUnlocked() ? 'unlocked' : 'locked'), fields: async () => p.vault.list(), setup: async (x) => { await p.vault.setup(x); self.bump(); }, unlock: async (x) => { await p.vault.unlock(x); self.bump(); }, lock: async () => { p.vault.lock(); self.bump(); }, add: async (k, l, v) => { await p.vault.set(k, l, v); self.bump(); }, remove: async (k) => { await p.vault.remove(k); self.bump(); } },
+      keepNote: async (id) => { await p.notes.keep(id); bump(); }, deleteNote: async (id) => { await p.notes.dismiss(id); bump(); }, editNote: async (id, t) => { await p.notes.edit(id, t); bump(); },
+      vault: { state: async () => (!(await p.vault.isSetUp()) ? 'unset' : p.vault.isUnlocked() ? 'unlocked' : 'locked'), fields: async () => p.vault.list(), setup: async (x) => { await p.vault.setup(x); bump(); }, unlock: async (x) => { await p.vault.unlock(x); bump(); }, lock: async () => { p.vault.lock(); bump(); }, add: async (k, l, v) => { await p.vault.set(k, l, v); bump(); }, remove: async (k) => { await p.vault.remove(k); bump(); } },
       usage: async () => { const u = await p.usage(); return { bytes: u.bytes, quota: u.quota, nearlyFull: u.nearlyFull }; },
     };
   }

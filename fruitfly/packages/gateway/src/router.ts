@@ -122,7 +122,7 @@ export class ModelRouter {
     const signal = opts.signal ?? new AbortController().signal;
     const protocol = !!req.tools?.length && !route.caps.tools;
     let messages = req.messages;
-    let retried = { rate: false, quick: false, ctx: false, repair: false, filter: false };
+    const retried = { rate: false, quick: false, ctx: false, repair: false, filter: false };
 
     for (;;) {
       const t0 = Date.now();

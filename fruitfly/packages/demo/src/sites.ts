@@ -36,7 +36,7 @@ function shop(host: string, opts: { cookieBanner?: boolean } = {}): MockSite {
   const brand = shopName[host]!;
   return {
     host,
-    render(url, state, form): MockPage {
+    render(url, state, _form): MockPage {
       const origin = `https://${host}`;
       const cookies = opts.cookieBanner && state.cookies !== 'accepted';
       const nav: MockNode[] = [{ t: 'link', label: `${brand} home`, to: `${origin}/` }, { t: 'link', label: 'Cart', to: `${origin}/cart` }];
@@ -85,7 +85,7 @@ const FLIGHTS = [
 
 const flights: MockSite = {
   host: 'skyhop.example',
-  render(url, _state, form): MockPage {
+  render(url, _state, _form): MockPage {
     const origin = 'https://skyhop.example';
     if (url.pathname === '/results') {
       const to = url.searchParams.get('to') ?? 'Paris'; const from = url.searchParams.get('from') ?? 'Mumbai'; const date = url.searchParams.get('date') ?? '';

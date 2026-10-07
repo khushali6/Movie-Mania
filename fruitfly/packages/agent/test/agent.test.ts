@@ -127,3 +127,16 @@ describe('sub-agent reports', () => {
 });
 
 async function runTask5(r: ReturnType<typeof rig>) { return r.run('go'); }
+
+describe('tabs', () => {
+  it('a tab the agent opens in the foreground becomes the one it works in; a background tab does not', async () => {
+    const r = rig(script([call('open_tab', { url: 'https://shop.test/buy' }), call('read_page'), call('finish', { title: 'ok', summary: 'ok' })]));
+    const s = await r.run('look at the checkout page');
+    const read = s.steps.find((x) => x.tool === 'read_page')!;
+    expect(read.inline ?? read.digest).toMatch(/Buy|Checkout/);
+    const b = rig(script([call('open_tab', { url: 'https://shop.test/buy', background: true }), call('read_page'), call('finish', { title: 'ok', summary: 'ok' })]));
+    const s2 = await b.run('look at the shop home');
+    const read2 = s2.steps.find((x) => x.tool === 'read_page')!;
+    expect(read2.inline ?? read2.digest).toMatch(/Shop/);
+  });
+});

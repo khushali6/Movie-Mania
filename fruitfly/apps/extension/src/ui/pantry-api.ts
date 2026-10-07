@@ -35,9 +35,9 @@ export class LocalPantry {
         else { this.jobs.delete(e.data.id); if (e.data.error) j.reject(new Error(e.data.error)); else j.resolve({ parsed: e.data.parsed!, mime: e.data.mime!, bytes: e.data.bytes! }); }
       };
     }
-    return new Promise<{ parsed: ParsedDoc; mime: string; bytes: number }>(async (resolve, reject) => {
+    return new Promise<{ parsed: ParsedDoc; mime: string; bytes: number }>((resolve, reject) => {
       const id = ++this.seq; this.jobs.set(id, { resolve, reject, onProgress });
-      const buffer = await file.arrayBuffer(); this.worker!.postMessage({ id, name: file.name, type: file.type, buffer }, [buffer]);
+      file.arrayBuffer().then((buffer) => this.worker!.postMessage({ id, name: file.name, type: file.type, buffer }, [buffer]), reject);
     });
   }
 

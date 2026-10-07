@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUp, Check, ChevronDown, Clipboard, Download, FileText, Globe, Layers, Lock, Paperclip, RotateCcw, Save, ShieldAlert, Square, Sparkles, Wand2, X, AlertTriangle, Eye, BookmarkPlus, Hand } from 'lucide-react';
+import { ArrowUp, Check, ChevronDown, Clipboard, Download, FileText, Globe, Layers, Lock, Paperclip, RotateCcw, Save, ShieldAlert, Square, Wand2, X, AlertTriangle, Eye, BookmarkPlus, Hand } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Approval, CompactionReport, FlyMood, Source, TaskResult } from '@fruitfly/core';
 import { dur, ease, spring } from '../motion';
@@ -264,7 +264,7 @@ export function CommandBar({ onSubmit, onSlash, busy, onStop, suggestions, onAtt
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === '/' && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) { e.preventDefault(); ta.current?.focus(); setText('/'); } }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
   return (
     <div ref={anchor}>
-      {!busy && suggestions && suggestions.length > 0 && !text && <div className="ff-chips" role="list" aria-label="Suggestions">{suggestions.map((s) => <button key={s} role="listitem" type="button" className="ff-chip" onClick={() => { setText(s); ta.current?.focus(); }}>{s}</button>)}</div>}
+      {!busy && suggestions && suggestions.length > 0 && !text && <div className="ff-chips" role="group" aria-label="Suggestions">{suggestions.map((s) => <button key={s} type="button" className="ff-chip" onClick={() => { setText(s); ta.current?.focus(); }}>{s}</button>)}</div>}
       <div className="ff-composer">
         <AnimatePresence>{matches.length > 0 && (
           <motion.div className="ff-slash" role="listbox" aria-label="Commands" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: dur.fast }}>

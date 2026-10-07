@@ -1,0 +1,21 @@
+import { chromium } from '@playwright/test';
+const [base = 'http://127.0.0.1:5191/', out = '.', w = '1440', h = '900'] = process.argv.slice(2);
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
+const page = await (await browser.newContext({ viewport: { width: +w, height: +h }, deviceScaleFactor: 1 })).newPage();
+const errs = []; page.on('console', (m) => m.type() === 'error' && errs.push(m.text())); page.on('pageerror', (e) => errs.push(e.message));
+await page.goto(base); await page.waitForTimeout(1500);
+await page.getByRole('button', { name: 'Cheapest laptop', exact: true }).click();
+await page.getByRole('region', { name: 'Result' }).waitFor({ timeout: 90000 });
+await page.waitForTimeout(1500);
+await page.locator('#demo').screenshot({ path: `${out}/l-demo.png` });
+for (const id of ['how', 'trust', 'pantry', 'gateway', 'privacy', 'install']) { await page.locator(`#${id}`).scrollIntoViewIfNeeded(); await page.waitForTimeout(900); await page.locator(`#${id}`).screenshot({ path: `${out}/l-${id}.png` }); }
+await page.locator('#gateway').scrollIntoViewIfNeeded();
+await page.getByRole('button', { name: 'Hit a rate limit' }).click();
+await page.getByText(/Finished the whole job/).waitFor({ timeout: 60000 });
+await page.locator('#gateway').screenshot({ path: `${out}/l-gateway-done.png` });
+await page.locator('#pantry').scrollIntoViewIfNeeded();
+await page.getByText('Remote, public only').click();
+await page.waitForTimeout(800);
+await page.locator('#pantry').screenshot({ path: `${out}/l-pantry-public.png` });
+console.log(errs.length ? errs.join('\n') : 'no console errors');
+await browser.close();

@@ -10,7 +10,7 @@ export function MockBrowserView({ browser, anchorId = 'page-preview', height }: 
   const version = useSyncExternalStore(subscribe, () => (browser ? browser.log.length * 1000 + (browser.highlighted ? 1 : 0) + (browser.highlighted?.ref.length ?? 0) : 0), () => 0);
   void version;
   const anchor = useFlyAnchor<HTMLDivElement>(anchorId, { side: 'right', gap: 14 });
-  if (!browser) return <div className="ff-browser" style={{ minHeight: 200 }} />;
+  if (!browser) return <div ref={anchor} className="ff-browser" style={{ minHeight: 200, height, display: 'grid', placeItems: 'center', color: 'var(--muted)', fontSize: 14, textAlign: 'center', padding: 24 }}>Pick a job above, or type one in the panel.<br />The tab appears here, and the fly goes to work.</div>;
   const v = browser.view(browser.activeId);
   const hl = browser.highlighted;
   const renderNode = (n: MockNode, i: number, inModal: boolean): React.ReactNode => {

@@ -137,7 +137,9 @@ export const openTab: ToolDef<{ url: string; background?: boolean }> = {
     const url = /^https?:\/\//i.test(a.url) ? a.url : `https://${a.url}`;
     if (ctx.deps.sitePolicy && !(await ctx.deps.sitePolicy.isAllowed(url))) return { ok: false, text: `The user has not allowed ${hostOf(url)} yet.`, digest: `${hostOf(url)} not allowed`, unexpected: `I need your permission to open ${hostOf(url)}.` };
     const t = await ctx.deps.browser.openTab(url, { background: a.background });
-    return { text: `Opened tab ${t.id}: "${t.title}" (${t.url}).`, digest: `Opened tab ${hostOf(t.url)}`, navigated: true };
+    // a foreground tab becomes the one the task works in; a background tab waits for switch_tab or an explicit `tab`
+    if (!a.background) ctx.update((st) => ({ ...st, tabId: t.id }));
+    return { text: `Opened tab ${t.id}: "${t.title}" (${t.url}).${a.background ? ' It is in the background; pass tab or use switch_tab to work in it.' : ' It is now the current tab.'}`, digest: `Opened tab ${hostOf(t.url)}`, navigated: true };
   },
 };
 
