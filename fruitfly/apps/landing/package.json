@@ -1,0 +1,41 @@
+{
+  "name": "@fruitfly/landing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fruitfly/core": "workspace:*",
+    "@fruitfly/ui": "workspace:*",
+    "@fruitfly/agent": "workspace:*",
+    "@fruitfly/demo": "workspace:*",
+    "@fruitfly/gateway": "workspace:*",
+    "@fruitfly/pantry": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "motion": "^12.0.0",
+    "lucide-react": "^0.460.0",
+    "clsx": "^2.1.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^7.0.0",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/chrome": "^0.0.300"
+  }
+}

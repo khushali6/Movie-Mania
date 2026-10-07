@@ -1,0 +1,96 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/fraunces";
+
+/* FruitFly design tokens. Warm ivory surfaces, near-black ink, restrained fruit accents. */
+:root {
+  --ff-honey: #E0A04A;
+  --ff-ruby: #C2342B;
+  --ff-peach: #F2A07B;
+  --ff-lime: #A9C84A;
+  --ff-plum: #6B3E5B;
+  --ff-cherry: #C23B3B;
+  --ff-lime-deep: #5E7A1C;
+
+  --bg: #FAF6EE;
+  --surface: #FFFDF8;
+  --raised: #FFFFFF;
+  --ink: #17140F;
+  --muted: #6B6458;
+  --border: #E8E0D0;
+  --border-strong: #D6CBB4;
+  --sunken: #F3EDE0;
+
+  --success: var(--ff-lime-deep);
+  --warning: #B87914;
+  --danger: var(--ff-cherry);
+  --info: #7C5570;
+  --accent: var(--ff-honey);
+  --accent-ink: #3B2608;
+  --ring: var(--ff-honey);
+
+  /* Layered shadows: contact + ambient + key light from upper-left (matches the fly's lighting). */
+  --shadow-1: 0 0 0 1px rgb(23 20 15 / .04), 1px 1px 2px rgb(23 20 15 / .05), 2px 4px 10px -3px rgb(23 20 15 / .08);
+  --shadow-2: 0 0 0 1px rgb(23 20 15 / .05), 1px 2px 3px rgb(23 20 15 / .06), 4px 10px 24px -8px rgb(23 20 15 / .14);
+  --shadow-3: 0 0 0 1px rgb(23 20 15 / .06), 2px 3px 5px rgb(23 20 15 / .07), 8px 22px 48px -14px rgb(23 20 15 / .24);
+  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(23 20 15 / .04);
+
+  --r-1: 6px; --r-2: 10px; --r-3: 14px; --r-4: 20px; --r-5: 28px;
+
+  --font-ui: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(.3, 0, 0, 1);
+  --ease-exit: cubic-bezier(.4, 0, 1, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; --ff-dark: 1; }
+}
+
+:root[data-theme="dark"], :root:not([data-theme="light"]) .ff-dark-scope {
+  color-scheme: dark;
+}
+
+/* Night orchard */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14110C; --surface: #1C1812; --raised: #241F17; --sunken: #100D09;
+    --ink: #F5EFE2; --muted: #A59C8B; --border: #332C20; --border-strong: #463C2B;
+    --success: #B6D45B; --warning: #E0A04A; --danger: #E26A60; --info: #C79ABA;
+    --accent-ink: #1E1305;
+    --shadow-1: 0 0 0 1px rgb(255 255 255 / .04), 1px 1px 2px rgb(0 0 0 / .4), 2px 4px 10px -3px rgb(0 0 0 / .45);
+    --shadow-2: 0 0 0 1px rgb(255 255 255 / .05), 1px 2px 3px rgb(0 0 0 / .45), 4px 10px 24px -8px rgb(0 0 0 / .6);
+    --shadow-3: 0 0 0 1px rgb(255 255 255 / .06), 2px 3px 5px rgb(0 0 0 / .5), 8px 22px 48px -14px rgb(0 0 0 / .7);
+    --shadow-inset: inset 0 1px 0 rgb(255 255 255 / .05), inset 0 -1px 0 rgb(0 0 0 / .3);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14110C; --surface: #1C1812; --raised: #241F17; --sunken: #100D09;
+  --ink: #F5EFE2; --muted: #A59C8B; --border: #332C20; --border-strong: #463C2B;
+  --success: #B6D45B; --warning: #E0A04A; --danger: #E26A60; --info: #C79ABA;
+  --accent-ink: #1E1305;
+  --shadow-1: 0 0 0 1px rgb(255 255 255 / .04), 1px 1px 2px rgb(0 0 0 / .4), 2px 4px 10px -3px rgb(0 0 0 / .45);
+  --shadow-2: 0 0 0 1px rgb(255 255 255 / .05), 1px 2px 3px rgb(0 0 0 / .45), 4px 10px 24px -8px rgb(0 0 0 / .6);
+  --shadow-3: 0 0 0 1px rgb(255 255 255 / .06), 2px 3px 5px rgb(0 0 0 / .5), 8px 22px 48px -14px rgb(0 0 0 / .7);
+  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / .05), inset 0 -1px 0 rgb(0 0 0 / .3);
+}
+
+html { background: var(--bg); color: var(--ink); font-family: var(--font-ui); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-feature-settings: "ss01", "cv11"; }
+body { margin: 0; background: var(--bg); color: var(--ink); }
+*, *::before, *::after { box-sizing: border-box; }
+.tnum { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--font-mono); }
+.display { font-family: var(--font-display); font-variation-settings: "SOFT" 100, "WONK" 0; letter-spacing: -0.02em; }
+
+:where(button, a, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring); outline-offset: 2px; border-radius: inherit;
+}
+::selection { background: color-mix(in srgb, var(--ff-honey) 40%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "fruitfly",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev:ext": "pnpm --filter @fruitfly/extension dev",
+    "dev:landing": "pnpm --filter @fruitfly/landing dev",
+    "fly-lab": "pnpm --filter @fruitfly/ui fly-lab",
+    "build:ext": "pnpm --filter @fruitfly/extension build",
+    "build:landing": "pnpm --filter @fruitfly/landing build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "pnpm -r --no-bail typecheck",
+    "bench:fly": "tsx tools/bench-fly.ts",
+    "eval:pantry": "tsx tools/eval-pantry.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "fake-indexeddb": "^6.0.0",
+    "fast-check": "^3.23.0",
+    "jsdom": "^26.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.0.0"
+  }
+}
