@@ -3,7 +3,7 @@ import { COMPACT_AT, HARD_STOP_AT, budgetsFor, type Budgets } from './budgets';
 import { PromptBuilder, stepMessages, type BuiltPrompt, type Passage } from './prompt';
 import type { MeterReport } from './meter';
 
-export interface ContextInputs { tools: ToolSpec[]; profileDigest?: string; profileSensitivity?: Sensitivity; standingInstructions?: string; passages?: Passage[] }
+export interface ContextInputs { system?: string; tools: ToolSpec[]; profileDigest?: string; profileSensitivity?: Sensitivity; standingInstructions?: string; passages?: Passage[] }
 
 export interface BuiltContext extends BuiltPrompt {
   budgets: Budgets;

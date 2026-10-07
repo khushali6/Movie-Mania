@@ -13,6 +13,8 @@ export interface PromptInput {
   profileSensitivity?: Sensitivity;
   standingInstructions?: string;
   passages?: Passage[];
+  /** replace the default system rules (sub-agents have their own tiny prompt) */
+  system?: string;
   budgets: Budgets;
 }
 
@@ -65,9 +67,10 @@ export class PromptBuilder {
     };
 
     // (a) stable
-    push({ role: 'system', content: SYSTEM_RULES, sensitivity: 'public', cacheBreakpoint: true }, 'system', 'system', true);
+    const rules = inp.system ?? SYSTEM_RULES;
+    push({ role: 'system', content: rules, sensitivity: 'public', cacheBreakpoint: true }, 'system', 'system', true);
     const toolsText = stableStringify(tools);
-    segments.push({ id: 'system', kind: 'system', tokens: estimateTokens(SYSTEM_RULES) + 4, cacheable: true, sensitivity: 'public', content: SYSTEM_RULES });
+    segments.push({ id: 'system', kind: 'system', tokens: estimateTokens(rules) + 4, cacheable: true, sensitivity: 'public', content: rules });
     segments.push({ id: 'tools', kind: 'tools', tokens: estimateTokens(toolsText), cacheable: true, sensitivity: 'public', content: toolsText });
 
     // (b) semi-stable

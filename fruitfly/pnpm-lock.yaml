@@ -214,9 +214,15 @@ importers:
       '@fruitfly/agent':
         specifier: workspace:*
         version: link:../agent
+      '@fruitfly/context':
+        specifier: workspace:*
+        version: link:../context
       '@fruitfly/core':
         specifier: workspace:*
         version: link:../core
+      '@fruitfly/egress':
+        specifier: workspace:*
+        version: link:../egress
       '@fruitfly/gateway':
         specifier: workspace:*
         version: link:../gateway

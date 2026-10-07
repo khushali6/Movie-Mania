@@ -17,7 +17,9 @@
     "@fruitfly/agent": "workspace:*",
     "@fruitfly/gateway": "workspace:*",
     "@fruitfly/pantry": "workspace:*",
-    "zod": "^3.24.0"
+    "zod": "^3.24.0",
+    "@fruitfly/context": "workspace:*",
+    "@fruitfly/egress": "workspace:*"
   },
   "devDependencies": {}
 }
