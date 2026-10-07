@@ -132,6 +132,9 @@ export class AgentHost {
     this.broadcast({ kind: 'env', running: false });
   }
 
+  /** the loop pauses at its next boundary; tell the panel and the page right away so the button never feels dead */
+  private announcePause(): void { if (this.currentTaskId) this.onEvent({ type: 'paused', taskId: this.currentTaskId, at: Date.now() }); }
+
   broadcast(m: PanelMsg): void { for (const p of this.ports) { try { p.postMessage(m); } catch { this.ports.delete(p); } } }
 
   hello(port: chrome.runtime.Port): void {
@@ -151,7 +154,7 @@ export class AgentHost {
         return { ok: true };
       }
       case 'stop': this.controller.stop(); return { ok: true };
-      case 'pause': this.controller.pause(); return { ok: true };
+      case 'pause': this.controller.pause(); this.announcePause(); return { ok: true };
       case 'resume': if (this.controller.isPaused) this.controller.resumePaused(); else void this.controller.resume(); return { ok: true };
       case 'approve': this.controller.approve(c.approvalId); return { ok: true };
       case 'cancel_approval': this.controller.cancelApproval(c.approvalId); return { ok: true };
@@ -169,7 +172,7 @@ export class AgentHost {
       case 'command': return this.command(m.command);
       case 'permission_granted': this.policy.settle(m.host, true); this.permissionHost = null; this.broadcast({ kind: 'env', permission: null }); return { ok: true };
       case 'permission_denied': this.policy.settle(m.host, false); this.broadcast({ kind: 'env', permission: null }); return { ok: true };
-      case 'takeover_from_page': this.controller.takeover(); this.controller.pause(); return { ok: true };
+      case 'takeover_from_page': this.controller.takeover(); this.controller.pause(); this.announcePause(); return { ok: true };
       case 'stop_from_page': this.controller.stop(); return { ok: true };
       case 'fly_path': this.path.push(...m.pts); return { ok: true };
       case 'pantry_changed': {

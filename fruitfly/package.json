@@ -12,7 +12,7 @@
     "build:landing": "pnpm --filter @fruitfly/landing build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "pnpm --filter @fruitfly/extension build:test && playwright test",
+    "test:e2e": "pnpm --filter @fruitfly/extension build && pnpm --filter @fruitfly/extension build:test && playwright test",
     "lint": "eslint .",
     "typecheck": "pnpm -r --no-bail typecheck",
     "bench:fly": "tsx tools/bench-fly.ts",

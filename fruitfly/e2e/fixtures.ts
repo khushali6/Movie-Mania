@@ -5,7 +5,8 @@ import os from 'node:os';
 import fs from 'node:fs';
 import { MockGateway } from '../packages/gateway/src/mock-gateway';
 
-const DIST = path.resolve(process.env.FF_DIST ?? 'apps/extension/dist-test');
+const TEST_DIST = path.resolve('apps/extension/dist-test');
+const PROD_DIST = path.resolve('apps/extension/dist');
 
 export const SHOP_HTML = `<!doctype html><html><head><title>Cartwheel — Laptops</title></head><body>
 <h1>Laptops</h1><ul>
@@ -31,7 +32,8 @@ export async function startSite(): Promise<{ url: string; hits: string[]; close:
 
 export interface Ext { ctx: BrowserContext; id: string; sw: () => Promise<Worker>; panel: () => Promise<Page>; setSettings: (patch: Record<string, unknown>) => Promise<void>; setKey: (name: string, value: string) => Promise<void>; dump: () => Promise<Record<string, unknown>> }
 
-export const test = base.extend<{ ext: Ext; gateway: MockGateway & { url: string } }>({
+export const test = base.extend<{ ext: Ext; gateway: MockGateway & { url: string }; build: 'test' | 'prod' }>({
+  build: ['test', { option: true }],
   // eslint-disable-next-line no-empty-pattern
   gateway: async ({}, use) => {
     const g = new MockGateway();
@@ -40,8 +42,9 @@ export const test = base.extend<{ ext: Ext; gateway: MockGateway & { url: string
     await l.close();
   },
   // eslint-disable-next-line no-empty-pattern
-  ext: async ({}, use) => {
-    if (!fs.existsSync(DIST)) throw new Error(`build the test extension first: pnpm --filter @fruitfly/extension build:test (${DIST})`);
+  ext: async ({ build }, use) => {
+    const DIST = build === 'prod' ? PROD_DIST : TEST_DIST;
+    if (!fs.existsSync(DIST)) throw new Error(`build the test extension first: pnpm --filter @fruitfly/extension build:test (or build) (${DIST})`);
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ff-e2e-'));
     const ctx = await chromium.launchPersistentContext(dir, { headless: false, executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox', '--headless=new', `--disable-extensions-except=${DIST}`, `--load-extension=${DIST}`] });
     const getSw = async () => ctx.serviceWorkers()[0] ?? (await ctx.waitForEvent('serviceworker', { timeout: 15_000 }));

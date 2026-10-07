@@ -23,6 +23,8 @@ export class MockGateway {
   models: { id: string; context_length?: number; execution_status?: string }[] = [{ id: 'auto' }, { id: 'auto:smart' }, { id: 'auto:fast' }];
   requireKey: string | undefined;
   hasPing = false;
+  /** hold every completion from the nth one on for this long (lets e2e tests inspect a page mid-task) */
+  hold: { from: number; ms: number } | undefined;
   private n = 0;
 
   inject(...f: Fault[]): this { this.queue.push(...f); return this; }
@@ -69,6 +71,7 @@ export class MockGateway {
           case 'disconnect': return this.stream(req, 'disconnect');
         }
       }
+      if (this.hold && this.n >= this.hold.from) await new Promise<void>((res) => { const t = setTimeout(res, this.hold!.ms); signal?.addEventListener('abort', () => { clearTimeout(t); res(); }, { once: true }); });
       const r = this.reply(req, this.n++);
       if (req.stream === true) return this.stream(req, 'ok', r);
       return this.respond(path, req, r);

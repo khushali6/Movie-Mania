@@ -201,6 +201,9 @@ export async function runTask(initial: TaskState, deps: AgentDeps, opts: RunOpti
       state = { ...state, status: 'stopped', meta: { ...state.meta, pendingCall: undefined }, result: partialResult(state, 'I got stuck repeating the same step, so I stopped.') }; await persist(); if (!sub) E('result', { result: state.result! }); return state;
     }
 
+    // a pause pressed while the model was thinking takes effect before anything is touched
+    if (!sub && opts.control?.paused()) { E('paused', {}); state = { ...state, status: 'paused' }; await persist(); await opts.control.whenResumed(); if (deps.signal.aborted) return stop('user'); state = { ...state, status: 'running' }; E('resumed', {}); }
+
     // ── target, fly, safety ──
     const target = await tool.target?.(ctx, args as never).catch(() => undefined);
     E('step_started', { step: { id: `s${index}`, index, title: title(tool.spec.name, args, target), tool: tool.spec.name, args: redactArgs(args), tabId: ctx.tabId, targetLabel: target?.label }, kind });

@@ -92,11 +92,20 @@ test('the service worker can die mid-task and the task resumes and finishes', as
   await panel.keyboard.press('Enter');
   await expect.poll(() => gateway.requests.filter((r) => r.path === '/v1/chat/completions').length, { timeout: 30_000 }).toBeGreaterThan(0);
   const cdp = await ext.ctx.newCDPSession(panel);
+  const versions = new Map<string, string>();
+  const stopped: string[] = [];
+  cdp.on('ServiceWorker.workerVersionUpdated', (e: { versions: { versionId: string; runningStatus: string; scriptURL: string }[] }) => {
+    for (const v of e.versions) { if (v.scriptURL.includes(ext.id)) { versions.set(v.versionId, v.runningStatus); if (v.runningStatus === 'stopped') stopped.push(v.versionId); } }
+  });
   await cdp.send('ServiceWorker.enable');
-  await cdp.send('ServiceWorker.stopAllWorkers');
+  await expect.poll(() => [...versions.values()].includes('running')).toBe(true);
+  for (const [id, st] of versions) if (st === 'running') await cdp.send('ServiceWorker.stopWorker', { versionId: id });
+  await expect.poll(() => stopped.length, { timeout: 10_000 }).toBeGreaterThan(0);
   // wake it again the way real use does: the panel talks to it
   await panel.waitForTimeout(1500);
   await panel.evaluate(() => chrome.runtime.sendMessage({ ff: 'ping' }).catch(() => undefined));
   await expect(panel.getByRole('region', { name: 'Result' })).toBeVisible({ timeout: 100_000 });
+  expect(stopped.length).toBeGreaterThan(0);
+  expect(gateway.requests.filter((r) => r.path === '/v1/chat/completions').length).toBeGreaterThan(1);
   await site.close();
 });
