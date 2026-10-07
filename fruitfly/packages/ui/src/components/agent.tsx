@@ -132,8 +132,8 @@ function MiniFly({ s }: { s: SubagentModel }) {
   const [from, setFrom] = useState<{ x: number; y: number } | null>(null);
   useEffect(() => {
     const el = ref.current; if (!el || !fly || reduced) { setFrom({ x: 0, y: 0 }); return; }
-    const p = fly.engine.position; const r = el.getBoundingClientRect(); const layer = el.closest('body')!.getBoundingClientRect();
-    void layer; setFrom({ x: p.x - r.left - 10, y: p.y - r.top - 6 });
+    const p = fly.engine.position; const r = el.getBoundingClientRect(); 
+    setFrom({ x: p.x - r.left - 10, y: p.y - r.top - 6 });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const mood: FlyMood = s.phase === 'start' ? (s.kind === 'researcher' ? 'searching' : s.kind === 'doc' ? 'curious' : 'reading') : s.phase === 'done' ? 'success' : 'confused';
   const arc = from && !reduced ? { x: [from.x, from.x * 0.45, 0], y: [from.y, Math.min(from.y, 0) * 0.5 - 22, 0], scale: [0.4, 1.1, 1] } : { x: 0, y: 0, scale: 1 };

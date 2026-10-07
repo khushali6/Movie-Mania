@@ -302,13 +302,12 @@ export class FlyEngine {
     this.frame.mood = next;
     this.timers = this.timers.filter((t) => t.at < 0); // drop leftover beats from the old mood
     this.nextWanderAt = this.now + this.rng.range(...this.mp.wanderEvery);
-    this.onEnter(next, prev);
+    this.onEnter(next);
     this.emit('moodchange');
   }
 
-  private onEnter(mood: FlyMood, prev: FlyMood): void {
+  private onEnter(mood: FlyMood): void {
     const r = this.rng;
-    const sc = ENERGY[this.energy];
     switch (mood) {
       case 'greeting':
         this.after(180, () => this.hop(7));
@@ -345,11 +344,9 @@ export class FlyEngine {
       case 'sleeping':
         this.plan = null;
         this.after(0, () => { this.wingBurst = 1; this.legSpr.v += 3; });
-        void sc;
         break;
       default: break;
     }
-    void prev;
   }
   private sparksTone: 0 | 1 | 2 = 0;
 
@@ -656,7 +653,6 @@ export class FlyEngine {
 
   /** Idle micro-behaviours; never the same one twice in a row, to avoid loop fatigue. */
   private idleLife(dt: number, amp: number): void {
-    void dt;
     const sc = ENERGY[this.energy];
     if (this.now >= this.nextBlinkAt) {
       this.blinkUntil = this.now + 0.11;

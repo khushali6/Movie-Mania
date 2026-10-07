@@ -54,3 +54,28 @@ test('landing: accessibility (axe, WCAG AA)', async ({ page }) => {
   const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.length} (${v.nodes[0]?.target.join(' ')})`)).toEqual([]);
 });
+
+test('landing: smooth while the agent works (frame budget)', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Cheapest laptop', exact: true }).click();
+  await page.waitForTimeout(2500);
+  const stats = await page.evaluate(() => new Promise<{ avg: number; p95: number; n: number }>((resolve) => {
+    const times: number[] = []; let last = performance.now(); const end = last + 4000;
+    const tick = (t: number) => { times.push(t - last); last = t; if (t < end) requestAnimationFrame(tick); else { times.shift(); times.sort((a, b) => a - b); resolve({ avg: times.reduce((a, b) => a + b, 0) / times.length, p95: times[Math.floor(times.length * 0.95)]!, n: times.length }); } };
+    requestAnimationFrame(tick);
+  }));
+  // software-rendered CI browser: generous, but a runaway animation loop would blow well past it
+  expect(stats.avg).toBeLessThan(25);
+  expect(stats.p95).toBeLessThan(60);
+});
+
+test.describe('reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('landing: still completes a job and nothing keeps animating on the page chrome', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Cheapest laptop', exact: true }).click();
+    await expect(page.getByRole('region', { name: 'Result' })).toContainText('Redmi Book 15', { timeout: 80_000 });
+    const running = await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running' && (a.effect as KeyframeEffect | null)?.target?.closest?.('.lp-nav, .lp-section') && (a.effect?.getComputedTiming().iterations ?? 1) === Infinity).length);
+    expect(running).toBe(0);
+  });
+});

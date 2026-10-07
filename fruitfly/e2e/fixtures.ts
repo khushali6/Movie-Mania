@@ -41,7 +41,6 @@ export const test = base.extend<{ ext: Ext; gateway: MockGateway & { url: string
     await use(Object.assign(g, { url: l.url }));
     await l.close();
   },
-  // eslint-disable-next-line no-empty-pattern
   ext: async ({ build }, use) => {
     const DIST = build === 'prod' ? PROD_DIST : TEST_DIST;
     if (!fs.existsSync(DIST)) throw new Error(`build the test extension first: pnpm --filter @fruitfly/extension build:test (or build) (${DIST})`);

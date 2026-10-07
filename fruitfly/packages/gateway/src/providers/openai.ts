@@ -34,7 +34,6 @@ export const openaiProvider: Provider = {
     if (req.json && route.caps.json) body.response_format = { type: 'json_object' };
     const headers: Record<string, string> = ctx.key ? { authorization: `Bearer ${ctx.key}` } : {};
     const url = `${route.baseUrl.replace(/\/$/, '')}/chat/completions`;
-    const started = Date.now();
 
     if (req.onDelta && route.caps.streaming) {
       body.stream = true;
@@ -59,7 +58,6 @@ export const openaiProvider: Provider = {
     if (!choice?.message) throw providerError('malformed_output', json.error?.message ?? 'Empty response.');
     if (choice.finish_reason === 'content_filter') throw providerError('content_filtered', 'Blocked by a content filter.');
     const toolCalls: ToolCall[] = (choice.message.tool_calls ?? []).map((c, i) => ({ id: c.id ?? `call_${i}`, name: c.function?.name ?? '', args: parseToolArgs(c.function?.arguments) }));
-    void started;
     return {
       text: prepared.restore(choice.message.content ?? ''),
       toolCalls: toolCalls.map((c) => ({ ...c, args: restoreArgs(c.args, prepared.restore) })),

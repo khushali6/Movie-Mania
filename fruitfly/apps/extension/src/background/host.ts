@@ -1,8 +1,8 @@
-import { AgentController, MemoryTaskStore, RouterModelClient, type ModelClient } from '@fruitfly/agent';
+import { AgentController, RouterModelClient, type ModelClient } from '@fruitfly/agent';
 import { ContextManager, TokenMeter } from '@fruitfly/context';
 import { CommandSchema, type AgentEvent, type Approval, type Command, type ProfileName } from '@fruitfly/core';
 import { EgressGuard, summarizeLedger } from '@fruitfly/egress';
-import { BudgetTracker, CircuitBreakers, ModelRouter, RateLimiter, ResponseCache, anthropicProvider, buildProfiles, detectGateway, geminiProvider, listGatewayModels, ollamaProvider, openaiProvider, type RouterEvent } from '@fruitfly/gateway';
+import { BudgetTracker, CircuitBreakers, ModelRouter, RateLimiter, ResponseCache, anthropicProvider, buildProfiles, detectGateway, geminiProvider, ollamaProvider, openaiProvider, type RouterEvent } from '@fruitfly/gateway';
 import { IdbPantryStore, Pantry } from '@fruitfly/pantry';
 import { loadKeys, loadSettings, onSettings, type Settings } from '../shared/settings';
 import { isLiveConfigured, profilesFrom, routeLabel } from '../shared/routes';
@@ -206,7 +206,6 @@ export class AgentHost {
       out.tools = r2.ok && (((await r2.json()) as { choices?: { message?: { tool_calls?: unknown[] } }[] }).choices?.[0]?.message?.tool_calls?.length ?? 0) > 0;
       const r3 = await call({ model: 'auto', max_tokens: 8, stream: true, messages: [{ role: 'user', content: 'Say ok.' }] });
       out.stream = r3.ok && (r3.headers.get('content-type') ?? '').includes('event-stream');
-      void listGatewayModels;
     } catch (e) { out.error = e instanceof Error ? e.message : 'I cannot reach your gateway.'; }
     return out;
   }
@@ -232,4 +231,3 @@ export class AgentHost {
     await this.init(); this.broadcast({ kind: 'env' }); return { ok: true };
   }
 }
-void MemoryTaskStore;

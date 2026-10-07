@@ -7,8 +7,6 @@ test('without a site permission the agent stops and asks, and never touches the 
   const site = await startSite();
   script(gateway, [{ toolCalls: [{ name: 'open_tab', args: { url: `${site.url}/` } }] }, { toolCalls: [{ name: 'read_page', args: {} }] }, { toolCalls: [{ name: 'finish', args: { title: 'Done', summary: 'All done.' } }] }]);
   await ext.setSettings({ mode: 'live', onboarded: true, gateway: { enabled: true, url: `${gateway.url}/v1`, template: 'balanced' } });
-  const manifest = await (await ext.ctx.newPage()).evaluate(async (id) => (await fetch(`chrome-extension://${id}/manifest.json`)).json(), ext.id).catch(() => null);
-  void manifest;
   const panel = await ext.panel();
   await panel.locator('textarea').fill('Look at this shop');
   await panel.keyboard.press('Enter');

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Copy, Plus, Search, Settings } from 'lucide-react';
-import { ApprovalCard, Badge, Button, Callout, CheckRow, CommandBar, CommandPalette, CompactedChip, ConnectGatewayWizard, ContextInspector, Dialog, DocRow, DropZone, EmptyState, ErrorState, GatewayStatus, IconButton, Input, Kbd, ModelRoutePicker, NectarMeter, NotesList, ProceduralFly, ProfileForm, Progress, ProgressRing, ResultCard, Segmented, Select, Sheet, Skeleton, Slider, SourceChip, StatusChip, Tabs, Textarea, Toggle, Tooltip, ToastProvider, useToast, VaultPanel, Card, Field, SENS_COPY, type DocView, type RouteView, type ProfileFieldView, type InspectorData, type SessionState, initialSession, Timeline } from '@fruitfly/ui';
+import { ApprovalCard, Badge, Button, Callout, CheckRow, CommandBar, CommandPalette, CompactedChip, ConnectGatewayWizard, ContextInspector, Dialog, DocRow, DropZone, EmptyState, ErrorState, GatewayStatus, IconButton, Input, Kbd, ModelRoutePicker, NectarMeter, NotesList, ProceduralFly, ProfileForm, Progress, ProgressRing, ResultCard, Segmented, Select, Sheet, Skeleton, Slider, SourceChip, StatusChip, Tabs, Textarea, Toggle, Tooltip, ToastProvider, useToast, VaultPanel, Field, SENS_COPY, type DocView, type RouteView, type ProfileFieldView, type InspectorData, type SessionState, initialSession, Timeline } from '@fruitfly/ui';
 
 const docs: DocView[] = [
   { id: '1', title: 'Lease-2025.pdf', mime: 'application/pdf', bytes: 482_000, sensitivity: 'local-only', status: 'ready', lastUsedAt: Date.now() - 600_000, chunkCount: 10 },
@@ -63,4 +63,3 @@ export function ComponentsPage() {
     </ToastProvider>
   );
 }
-void Card;

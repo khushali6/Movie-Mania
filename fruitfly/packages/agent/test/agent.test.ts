@@ -26,10 +26,6 @@ describe('safety: sensitive-action detector', () => {
 
 describe('approval cannot be bypassed by the model', () => {
   it('declined action never reaches the browser, and the model is told to choose another way', async () => {
-    const r = rig(script([call('click', { ref: 'e4' }), call('finish', { title: 'ok', summary: 'ok' })]), { decide: () => 'cancel' });
-    // e4 is "Delete account" on shop.test home (h1=h1? refs: e1 Checkout link, e2 Delete, e3 Details) → find it first
-    const s = await r.run('x', {}, r.deps());
-    void s;
     const r2 = rig(script([call('read_page'), call('click', { ref: 'e2' }), call('finish', { title: 'ok', summary: 'ok' })]), { decide: () => 'cancel' });
     const s2 = await r2.run('delete my account');
     expect(r2.events.filter((e) => e.type === 'approval_needed')).toHaveLength(1);

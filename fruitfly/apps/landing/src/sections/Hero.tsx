@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { FlyProvider, SidePanel, useFly } from '@fruitfly/ui';
 import { DemoPanelController, MockBrowserView, SCENARIOS } from '@fruitfly/demo';
-import { demoPantry, pantryReady } from '../pantry';
+import { demoPantry } from '../pantry';
 import { Reveal } from './common';
 
 function Bridge({ controller, view }: { controller: DemoPanelController; view: React.RefObject<HTMLDivElement | null> }) {
@@ -17,7 +17,7 @@ function LiveDemo() {
   const controller = useMemo(() => new DemoPanelController({ thinkMs: 520, pantry: demoPantry, seedPantry: false }), []);
   const [, force] = useState(0); const view = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<string | null>(null);
-  useEffect(() => { void pantryReady; return controller.onBrowser(() => force((n) => n + 1)); }, [controller]);
+  useEffect(() => { return controller.onBrowser(() => force((n) => n + 1)); }, [controller]);
   useEffect(() => { const h = (e: Event) => { const g = (e as CustomEvent<string>).detail; setActive(g); controller.start(g); }; window.addEventListener('ff:run', h); return () => window.removeEventListener('ff:run', h); }, [controller]);
   return (
     <div className="lp-stage" ref={setStage} data-testid="hero-stage">

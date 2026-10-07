@@ -84,7 +84,7 @@ export async function runTask(initial: TaskState, deps: AgentDeps, opts: RunOpti
   const resuming = state.steps.length > 0 || state.status === 'running' || state.status === 'waiting_approval' || state.status === 'paused';
   state = { ...state, status: 'running', tabId: state.tabId ?? (await deps.browser.activeTab()).id };
   if (!sub) { if (resuming) E('resumed', {}); else E('task_started', { goal: state.goal, mode: state.mode }); }
-  if (!sub && !state.meta.retrievalDone) { state = await retrievalGate(state, deps, emit, now, settings); await persist(); }
+  if (!sub && !state.meta.retrievalDone) { state = await retrievalGate(state, deps, emit, now); await persist(); }
 
   // an action that was in flight when we died is never blindly repeated
   const pending = state.meta.pendingCall as { callId: string; name: string; args: Record<string, unknown>; phase: 'approval' | 'running'; thought?: string } | undefined;
@@ -162,17 +162,15 @@ export async function runTask(initial: TaskState, deps: AgentDeps, opts: RunOpti
       call = resp.toolCalls[0]!; thought = resp.text ? resp.text.slice(0, 400) : undefined;
       state = { ...state, meta: { ...state.meta, pendingCall: { callId: call.id, name: call.name, args: call.args, phase: 'approval', thought } } };
       await persist();
-      void allowance;
     }
 
     // ── validate ──
     const tool = (opts.toolset ?? ALL_TOOLS).find((t) => t.spec.name === call!.name) as ToolDef<never> | undefined;
     const startedAt = now();
-    const finishStep = async (out: ToolOutput, target?: { label: string }) => {
+    const finishStep = async (out: ToolOutput) => {
       const sens = (out.sensitivity ?? 'public') as Sensitivity;
       state = recordStep(state, { callId: call!.id, tool: call!.name, args: call!.args, thought, ok: out.ok !== false, digest: out.digest ?? out.text.slice(0, 100), inline: out.text, handle: out.handle, truncated: out.truncated, sensitivity: sens, startedAt, endedAt: now(), route: undefined });
       state = { ...state, meta: { ...state.meta, pendingCall: undefined, stepSensitivity: undefined } };
-      void target;
       await persist();
       const rec = state.steps[state.steps.length - 1]!;
       E('step_finished', { stepId: rec.id, ok: rec.ok, digest: rec.digest, tokens: rec.tokens, ms: (rec.endedAt ?? now()) - rec.startedAt, truncated: out.truncated, handle: out.handle });
@@ -252,7 +250,7 @@ export async function runTask(initial: TaskState, deps: AgentDeps, opts: RunOpti
         return finalize(state, fin, deps, persist, E, sub, true);
       }
     }
-    await finishStep(out, target);
+    await finishStep(out);
     if (opts.finishName && tool.spec.name === opts.finishName) return { ...state, status: 'done' };
     if (out.pause) { state = { ...state, status: 'paused', meta: { ...state.meta, pendingQuestion: out.pause.question } }; await persist(); E('paused', {}); return state; }
     state = deps.context.maybeMask(state, deps.model.modelInfo(profile));
@@ -299,8 +297,7 @@ async function contextInputs(state: TaskState, deps: AgentDeps, specs: ToolSpec[
 }
 
 /** Retrieval gate: only when the question needs the user's own material. */
-async function retrievalGate(state: TaskState, deps: AgentDeps, emit: (e: AgentEvent) => void, now: () => number, settings: AgentSettings): Promise<TaskState> {
-  void settings;
+async function retrievalGate(state: TaskState, deps: AgentDeps, emit: (e: AgentEvent) => void, now: () => number): Promise<TaskState> {
   const mark = (s: TaskState): TaskState => ({ ...s, meta: { ...s.meta, retrievalDone: true } });
   const pantry = deps.pantry; if (!pantry) return mark(state);
   const docs = await pantry.list(); if (!docs.length) return mark(state);

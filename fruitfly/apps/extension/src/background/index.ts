@@ -1,5 +1,5 @@
-import { InternalMsgSchema, type PanelMsg } from '../shared/messages';
-import { loadSettings, updateSettings } from '../shared/settings';
+import { InternalMsgSchema } from '../shared/messages';
+import { updateSettings } from '../shared/settings';
 import { AgentHost } from './host';
 
 const host = new AgentHost();
@@ -31,5 +31,3 @@ chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
 
 chrome.tabs.onRemoved.addListener((id) => host.browser.forgetTab(id));
 chrome.tabs.onUpdated.addListener((id, info) => { if (info.status === 'loading') host.browser.forgetTab(id); });
-void loadSettings;
-export type { PanelMsg };
